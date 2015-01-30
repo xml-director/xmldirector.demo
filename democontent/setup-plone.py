@@ -5,6 +5,7 @@ import lxml.etree
 import plone.api
 import grampg
 import transaction
+import pkg_resources
 from Products.CMFPlone.factory import addPloneSite
 from AccessControl.SecurityManagement import newSecurityManager
 from xmldirector.plonecore.interfaces import IWebdavSettings
@@ -33,7 +34,7 @@ newSecurityManager(None, user.__of__(uf))
 if 'xml-director' in app.objectIds():
     app.manage_delObjects('xml-director')
 
-addPloneSite(app, 'xml-director', create_userfolder=True, extension_ids=['plonetheme.sunburst:default', 'xmldirector.plonecore:democontent', 'pp.client.plone:default'])
+addPloneSite(app, 'xml-director', create_userfolder=True, extension_ids=['plonetheme.sunburst:default', 'xmldirector.demo:default', 'pp.client.plone:default'])
 site = app['xml-director']
 site.manage_delObjects(['events', 'news', 'Members'])
 pr = site.portal_registration
@@ -51,7 +52,8 @@ settings.server_username = u'demo'
 settings.server_password = u'demo'
 
 folder = plone.api.content.create(type='Folder', container=site, id='shakespeare', title='Shakespeare XML')
-import_dir = os.path.join(os.getcwd(), 'democontent', 'shakespeare')
+import_dir = os.path.join(pkg_resources.get_distribution('xmldirector.demo').location, 'democontent', 'shakespeare')
+
 for name in sorted(os.listdir(import_dir)):
 
     if not name.endswith('.xml'):
@@ -63,7 +65,7 @@ for name in sorted(os.listdir(import_dir)):
         root = lxml.etree.fromstring(xml.encode('utf8'))
         title = root.xpath('//title')[0].text
         dok = plone.api.content.create(
-                type='xmldirector.plonecore.xmldocument',
+                type='xmldirector.demo.xmldocument',
                 container=folder,
                 id=name,
                 title=title)
