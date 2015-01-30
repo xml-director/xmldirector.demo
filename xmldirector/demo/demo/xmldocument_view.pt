@@ -18,7 +18,7 @@
           </a>
       </div>
 
-      <div tal:content="structure python: view.xslt_transform('xml_content', 'demo', 'play.xsl')" />
+      <div tal:content="structure python: view.xslt_transform('xml_content', 'demo', 'shakespeare.xsl')" />
 
 
   </metal:content-core>

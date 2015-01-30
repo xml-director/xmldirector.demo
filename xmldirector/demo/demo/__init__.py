@@ -12,4 +12,4 @@ import xmldocument  # NOQA
 
 cwd = os.path.dirname(__file__)
 XSLTRegistryUtility.register_stylesheet(
-    'demo', 'play.xsl', os.path.join(cwd, 'play.xsl'))
+    'demo', 'shakespeare.xsl', os.path.join(cwd, 'shakespeare.xsl'))
