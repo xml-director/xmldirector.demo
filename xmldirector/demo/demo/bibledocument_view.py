@@ -17,5 +17,5 @@ class BibleDocument(BrowserView):
 
     def asHTML(self):
         """ Generate a demo PDF """
-        return self.xslt_transform('xml_content', 'demo', 'shakespeare.xsl')
+        return self.context.xml_get('xml_content')
 

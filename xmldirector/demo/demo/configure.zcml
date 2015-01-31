@@ -19,7 +19,6 @@
         template="xmldocument_view.pt"
     />
 
-
     <browser:page
         for=".xmldocument.IXMLDocument"
         name="asHTML"
@@ -28,7 +27,7 @@
         attribute="asHTML"
     />
 
-    <!-- XMLDocument demo content -->
+    <!-- BibleDocument demo content -->
     <browser:page
         for=".bibledocument.IBibleDocument"
         name="bibledocument_view"
@@ -37,11 +36,23 @@
         template="bibledocument_view.pt"
     />
 
-
+    <browser:page
+        for=".bibledocument.IBibleDocument"
+        name="asHTML"
+        permission="zope2.View"
+        class=".bibledocument_view.BibleDocument"
+        attribute="asHTML"
+    />
 
     <pp:resourceDirectory
         name="shakespeare"
-        directory="resources_pdf"
+        directory="resources_shakespeare"
         />
+
+    <pp:resourceDirectory
+        name="bible"
+        directory="resources_bible"
+        />
+
 
 </configure>
