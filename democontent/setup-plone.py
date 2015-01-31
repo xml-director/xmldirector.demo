@@ -47,9 +47,23 @@ settings.webdav_username = u'admin'
 settings.webdav_password = u'admin'
 
 settings = registry.forInterface(IPPClientPloneSettings)
-settings.server_url = u'http://pdf.pysv.org'
+settings.server_url = u'https://pp-server.zopyx.com'
 settings.server_username = u'demo'
 settings.server_password = u'demo'
+
+
+folder = plone.api.content.create(type='Folder', container=site, id='bible', title='Bible XML')
+dok = plone.api.content.create(
+    type='xmldirector.demo.bibledocument',
+    container=folder,
+    id='bible-en',
+    title='Bible EN')
+
+import_dir = os.path.join(pkg_resources.get_distribution('xmldirector.demo').location, 'democontent', 'bible')
+bible_content = open(os.path.join(import_dir, 'index.xml')).read()
+dok.xml_set('xml_content', unicode(bible_content, 'utf-8'))
+dok.reindexObject()
+
 
 folder = plone.api.content.create(type='Folder', container=site, id='shakespeare', title='Shakespeare XML')
 import_dir = os.path.join(pkg_resources.get_distribution('xmldirector.demo').location, 'democontent', 'shakespeare')
