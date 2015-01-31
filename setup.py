@@ -36,6 +36,7 @@ setup(name='xmldirector.demo',
           'requests',
           'progressbar',
           'python-dateutil',
+          'pp.client-plone',
           # -*- Extra requirements: -*-
       ],
       tests_require=['zope.testing'],
