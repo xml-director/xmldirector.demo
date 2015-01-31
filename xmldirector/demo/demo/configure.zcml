@@ -28,6 +28,17 @@
         attribute="asHTML"
     />
 
+    <!-- XMLDocument demo content -->
+    <browser:page
+        for=".bibledocument.IBibleDocument"
+        name="bibledocument_view"
+        permission="zope2.View"
+        class=".bibledocument_view.BibleDocument"
+        template="bibledocument_view.pt"
+    />
+
+
+
     <pp:resourceDirectory
         name="shakespeare"
         directory="resources_pdf"

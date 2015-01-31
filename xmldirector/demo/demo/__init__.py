@@ -9,6 +9,7 @@ import os
 from xmldirector.plonecore.xslt_registry import XSLTRegistryUtility
 
 import xmldocument  # NOQA
+import bibledocument  # NOQA
 
 cwd = os.path.dirname(__file__)
 XSLTRegistryUtility.register_stylesheet(
