@@ -13,8 +13,8 @@
       <h2 i18n:translate="">Bible View without XSLT</h2>
 
       <div>
-          <a tal:attributes="href string:${context/absolute_url}/@@asPDF?resource=bible" style="border: none">
-              <button style="width: 100px; height: 40px; margin: 1em">PDF</button>
+          <a tal:attributes="href string:${context/absolute_url}/@@asPDF?resource=bible&converter=princexml" style="border: none">
+              <button style="width: 100px; height: 40px; margin: 1em">PDF (this will take some time)</button>
           </a>
       </div>
 
