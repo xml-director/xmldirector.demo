@@ -5,30 +5,12 @@
 # (C) 2014,  Andreas Jung, www.zopyx.com, Tuebingen, Germany
 ################################################################
 
-import os
-import uuid
+
 import unittest2
-import plone.api
-from fs.contrib.davfs import DAVFS
-from plone.app.testing import PloneSandboxLayer
+
 from plone.app.testing import applyProfile
-from plone.app.testing import PLONE_FIXTURE
 from plone.app.testing import IntegrationTesting
-from plone.app.testing import setRoles
-from plone.app.testing import login
-from plone.testing import z2
-from plone.registry.interfaces import IRegistry
-
-from zope.component import getUtility
-from zope.configuration import xmlconfig
-from xmldirector.plonecore.interfaces import IWebdavSettings
 from AccessControl.SecurityManagement import newSecurityManager
-
-import xmldirector.plonecore
-import plone.app.dexterity
-import pp.client.plone
-
-
 
 from xmldirector.plonecore.tests.base import PolicyFixture
 

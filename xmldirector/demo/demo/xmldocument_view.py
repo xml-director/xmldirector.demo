@@ -34,4 +34,3 @@ class XMLDocument(BrowserView):
     def asHTML(self):
         """ Generate a demo PDF """
         return self.xslt_transform('xml_content', 'demo', 'shakespeare.xsl')
-
