@@ -73,10 +73,6 @@ page.setText(frontpage_text)
 page.setPresentation(False)
 page.reindexObject()
 
-import transaction
-transaction.commit()
-sys.exit(0)
-
 folder = plone.api.content.create(type='Folder', container=site, id='bible', title='Bible XML')
 dok = plone.api.content.create(
     type='xmldirector.demo.bibledocument',
