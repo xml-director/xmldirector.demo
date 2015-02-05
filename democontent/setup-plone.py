@@ -51,6 +51,31 @@ settings.server_url = u'https://pp-server.zopyx.com'
 settings.server_username = u'demo'
 settings.server_password = u'demo'
 
+import_dir = os.path.join(pkg_resources.get_distribution('xmldirector.demo').location, 'democontent', 'images')
+
+image = plone.api.content.create(type='Image', container=site, id='logo')
+image.setImage(open(os.path.join(import_dir, 'xmldirector.png'), 'rb').read())
+image.setExcludeFromNav(True)
+image.reindexObject()
+
+
+frontpage_text = """
+<img src="logo" width="400"/>
+<br/>
+<br/>
+<p>Login with username <b>demo</b> and password <b>demo</b>.</p>
+"""
+
+page = site['front-page']
+page.setTitle('Welcome to the XML Director demo site')
+page.setDescription(None)
+page.setText(frontpage_text)
+page.setPresentation(False)
+page.reindexObject()
+
+import transaction
+transaction.commit()
+sys.exit(0)
 
 folder = plone.api.content.create(type='Folder', container=site, id='bible', title='Bible XML')
 dok = plone.api.content.create(
