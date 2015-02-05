@@ -64,6 +64,14 @@ frontpage_text = """
 <br/>
 <br/>
 <p>Login with username <b>demo</b> and password <b>demo</b>.</p>
+<br/>
+<p>
+<ul>
+<li><a href="http://pythonhosted.org/xmldirector.plonecore/demo.html">Demo documentation</a</li>
+<li><a href="http://pythonhosted.org/xmldirector.plonecore/">Complete XML Director documentation</a</li>
+<li><a href="http://www.xml-director.info">XML Director project site</a></li>
+</ul>
+</p>
 """
 
 page = site['front-page']
