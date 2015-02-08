@@ -44,6 +44,11 @@
         attribute="asXML"
     />
 
+    <browser:resourceDirectory
+        name="xmldirector.demo"
+        directory="resources"
+    />
+
     <pp:resourceDirectory
         name="shakespeare"
         directory="resources_shakespeare"

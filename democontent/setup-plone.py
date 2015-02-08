@@ -60,7 +60,7 @@ image.reindexObject()
 
 
 frontpage_text = """
-<img src="logo" width="400"/>
+<img src="logo" width="400" style="display: none"/>
 <br/>
 <br/>
 <p>Login with username <b>demo</b> and password <b>demo</b>.</p>
