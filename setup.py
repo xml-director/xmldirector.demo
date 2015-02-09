@@ -5,7 +5,7 @@ version = '0.1'
 
 setup(name='xmldirector.demo',
       version=version,
-      description="XML-Director ",
+      description="XML-Director demo package",
       long_description=open(os.path.join("docs", "source", "README.rst")).read() + "\n" +
       open(os.path.join("docs", "source", "HISTORY.rst")).read(),
       # Get more strings from
