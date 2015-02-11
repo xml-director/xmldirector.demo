@@ -6,11 +6,11 @@
 ################################################################
 
 import os
-from xmldirector.plonecore.xslt_registry import XSLTRegistryUtility
+from xmldirector.plonecore.transformer_registry import TransformerRegistryUtility
 
 import xmldocument  # NOQA
 import bibledocument  # NOQA
 
 cwd = os.path.dirname(__file__)
-XSLTRegistryUtility.register_stylesheet(
+TransformerRegistryUtility.register_transformation(
     'demo', 'shakespeare.xsl', os.path.join(cwd, 'shakespeare.xsl'))

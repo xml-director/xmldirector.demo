@@ -10,7 +10,7 @@ import lxml.etree
 import lxml.html.clean
 import zope.component
 from Products.Five.browser import BrowserView
-from xmldirector.plonecore.interfaces import IXSLTRegistry
+from xmldirector.plonecore.interfaces import ITransformerRegistry
 
 
 class XMLDocument(BrowserView):
@@ -20,13 +20,13 @@ class XMLDocument(BrowserView):
             context object under a given registered XSLT transformation.
         """
 
-        registry = zope.component.getUtility(IXSLTRegistry)
+        registry = zope.component.getUtility(ITransformerRegistry)
         xml = self.context.xml_get(fieldname)
         if not xml:
             return u''
-        transform = registry.get_stylesheet(family, stylesheet_name)
+        transform = registry.get_transformation(family, stylesheet_name)
         doc_root = lxml.etree.fromstring(xml)
-        result = transform(doc_root)
+        result = transform(doc_root, conversion_context=None)
         html = lxml.etree.tostring(result.getroot(), encoding=unicode)
         cleaner = lxml.html.clean.Cleaner()
         return cleaner.clean_html(html)
