@@ -25,4 +25,4 @@ test:
 	bin/test xmldirector
 
 test-coverage:
-	unbuffer bin/test --coverage=${PWD}/coverage xmldirector | tee coverage.txt
+	bin/test --coverage=${PWD}/coverage xmldirector 
