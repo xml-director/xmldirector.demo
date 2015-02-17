@@ -11,6 +11,7 @@ import lxml.html.clean
 import zope.component
 from Products.Five.browser import BrowserView
 from xmldirector.plonecore.interfaces import ITransformerRegistry
+from xmldirector.plonecore.transformation import Transformer
 
 
 class XMLDocument(BrowserView):
@@ -24,10 +25,9 @@ class XMLDocument(BrowserView):
         xml = self.context.xml_get(fieldname)
         if not xml:
             return u''
-        transform = registry.get_transformation(family, stylesheet_name)
-        doc_root = lxml.etree.fromstring(xml)
-        result = transform(doc_root, conversion_context=None)
-        html = lxml.etree.tostring(result.getroot(), encoding=unicode)
+
+        T = Transformer(steps=[(family, stylesheet_name)])
+        html = T(xml, input_encoding='utf8')
         cleaner = lxml.html.clean.Cleaner()
         return cleaner.clean_html(html)
 
