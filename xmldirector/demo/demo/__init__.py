@@ -18,3 +18,7 @@ TransformerRegistryUtility.register_transformation(
 cwd = os.path.dirname(__file__)
 TransformerRegistryUtility.register_transformation(
     'demo', 'sample-xslt2', os.path.join(cwd, 'sample_xslt2.xsl'), transformer_type='XSLT2')
+
+cwd = os.path.dirname(__file__)
+TransformerRegistryUtility.register_transformation(
+    'demo', 'sample-xslt3', os.path.join(cwd, 'sample_xslt3.xsl'), transformer_type='XSLT3')
