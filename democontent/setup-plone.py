@@ -38,7 +38,7 @@ addPloneSite(app, 'xml-director', create_userfolder=True, extension_ids=['plonet
 site = app['xml-director']
 site.manage_delObjects(['events', 'news', 'Members'])
 pr = site.portal_registration
-pr.addMember('demo', 'demo', roles=('Site Administrator',))
+pr.addMember('demo', 'demo', roles=('Editor','Reader'))
 
 registry = getUtility(IRegistry)
 settings = registry.forInterface(IWebdavSettings)

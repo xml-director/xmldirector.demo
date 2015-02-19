@@ -59,5 +59,22 @@
         directory="resources_bible"
         />
 
+    <!-- generic validation form -->
+    <browser:page
+        for="*"
+        name="validation"
+        template="validation.pt"
+        class=".validation.Validation"
+        permission="zope2.View"
+    />
+
+    <browser:page
+        for="*"
+        name="validation-action"
+        class=".validation.Validation"
+        attribute="validate" 
+        permission="zope2.View"
+    />
+
 
 </configure>
