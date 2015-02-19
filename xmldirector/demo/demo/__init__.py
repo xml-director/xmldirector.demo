@@ -23,3 +23,4 @@ TransformerRegistryUtility.register_transformation(
     'demo', 'sample-xslt3', os.path.join(cwd, 'sample_xslt3.xsl'), transformer_type='XSLT3')
 
 ValidatorRegistryUtility.parse_folder('demo', cwd)
+

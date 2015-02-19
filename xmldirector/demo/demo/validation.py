@@ -29,9 +29,15 @@ class Validation(BrowserView):
         return result
 
     def validate(self, fieldname, validator):
-
+        """ Validate the content of the XMLText field ``fieldname``
+            against the given ``validator`` (concatenated as "<family>::<name",
+            see validation.pt.
+        """
         validator = self.validator_registry.get_validator(*validator.split('::'))
         xml = self.context.xml_get(fieldname)
         result = validator.validate(xml)
-        print result
+        if not result:
+            self.context.plone_utils.addPortalMessage('Validation failed ({})'.format(result.errors), 'error')
+        else:
+            self.context.plone_utils.addPortalMessage('Validation OK')
         self.request.response.redirect(self.context.absolute_url() + '/@@validation')
