@@ -6,6 +6,7 @@
 ################################################################
 
 
+import lxml.etree
 from Products.Five.browser import BrowserView
 
 
@@ -13,4 +14,8 @@ class BibleDocument(BrowserView):
 
     def asXML(self):
         """ Generate a demo PDF """
-        return self.context.xml_get('xml_content')
+        xml = self.context.xml_get('xml_content')
+        root = lxml.etree.fromstring(xml)
+        for book in root.xpath('//BIBLEBOOK')[1:]:
+            book.getparent().remove(book)
+        return lxml.etree.tostring(root)

@@ -30,6 +30,7 @@ CHAPTER:before {
     content: 'Chapter ' attr(cnumber);
     font-size: 1.4em;
     font-weight: bold;
+    margin-right: 0.5em;
 }
 
 

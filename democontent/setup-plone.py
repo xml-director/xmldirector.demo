@@ -82,16 +82,17 @@ page.setPresentation(False)
 page.reindexObject()
 
 folder = plone.api.content.create(type='Folder', container=site, id='bible', title='Bible XML')
-dok = plone.api.content.create(
-    type='xmldirector.demo.bibledocument',
-    container=folder,
-    id='bible-en',
-    title='Bible EN')
 
 import_dir = os.path.join(pkg_resources.get_distribution('xmldirector.demo').location, 'democontent', 'bible')
-bible_content = open(os.path.join(import_dir, 'index.xml')).read()
-dok.xml_set('xml_content', unicode(bible_content, 'utf-8'))
-dok.reindexObject()
+for name in os.listdir(import_dir):
+    dok = plone.api.content.create(
+        type='xmldirector.demo.bibledocument',
+        container=folder,
+        id=name,
+        title=name)
+    bible_content = open(os.path.join(import_dir, name)).read()
+    dok.xml_set('xml_content', unicode(bible_content, 'utf-8'))
+    dok.reindexObject()
 
 
 folder = plone.api.content.create(type='Folder', container=site, id='shakespeare', title='Shakespeare XML')

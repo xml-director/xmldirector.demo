@@ -19,9 +19,11 @@
                       tal:content="name"/>
               </select>
               <select name="validator">
-                  <option tal:repeat="d view/validators"
-                      tal:attributes="value string:${d/family}::${d/name}"
-                      tal:content="string:${d/family}/${d/name} (${d/type})" />
+                  <optgroup label="Choose a validator">
+                      <option tal:repeat="d view/validators"
+                          tal:attributes="value string:${d/family}::${d/name}"
+                          tal:content="string:${d/family}/${d/name} (${d/type})" />
+                  </optgroup>
               </select>
               <input type="submit" class="context" value="Validate"/>
           </form>
