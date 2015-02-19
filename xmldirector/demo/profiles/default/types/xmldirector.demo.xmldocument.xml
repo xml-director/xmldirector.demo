@@ -49,4 +49,8 @@
     url_expr="string:${object_url}/edit" visible="True">
     <permission value="Modify portal content" />
   </action>
+  <action title="Validation" action_id="validation" category="object" condition_expr=""
+    url_expr="string:${object_url}/@@validation" visible="True">
+    <permission value="Modify portal content" />
+  </action>
 </object>
