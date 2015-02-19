@@ -8,9 +8,18 @@
 <body>
 
 <metal:main fill-slot="content-core">
-  <metal:content-core define-macro="content-core">
+    <metal:content-core define-macro="content-core">
 
-      <h2 i18n:translate="">XML Document content-type custom view (using XSLT)</h2>
+        <style type="text/css">
+            #body {
+                background: #ddd;
+                margin: 1em;
+                padding: 1em;
+            }
+
+        </style>
+
+      <div class="error" i18n:translate="">XML Document content-type custom view (using XSLT)</div>
 
       <div>
           <a tal:attributes="href string:${context/absolute_url}/@@asPDF?resource=shakespeare" style="border: none">
@@ -18,7 +27,7 @@
           </a>
       </div>
 
-      <div tal:content="structure python: view.xslt_transform('xml_content', 'demo', 'shakespeare.xsl')" />
+      <div id="body" tal:content="structure python: view.xslt_transform('xml_content', 'demo', 'shakespeare.xsl')" />
 
 
   </metal:content-core>
