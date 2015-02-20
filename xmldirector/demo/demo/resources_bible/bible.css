@@ -10,7 +10,7 @@ INFORMATION {
 }
 
 BIBLEBOOK {
-    page-break-before: always;
+    page-break-after: always;
     display: block;
     column-count: 2;
 }
