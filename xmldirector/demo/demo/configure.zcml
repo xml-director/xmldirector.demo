@@ -38,10 +38,10 @@
 
     <browser:page
         for=".bibledocument.IBibleDocument"
-        name="asXML"
+        name="asHTML"
         permission="zope2.View"
         class=".bibledocument_view.BibleDocument"
-        attribute="asXML"
+        attribute="asHTML"
     />
 
     <browser:resourceDirectory
