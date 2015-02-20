@@ -12,7 +12,7 @@ from Products.Five.browser import BrowserView
 
 class BibleDocument(BrowserView):
 
-    def asXML(self):
+    def asHTML(self):
         """ Generate a demo PDF """
         xml = self.context.xml_get('xml_content')
         root = lxml.etree.fromstring(xml)
