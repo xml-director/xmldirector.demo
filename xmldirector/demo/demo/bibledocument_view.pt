@@ -70,6 +70,13 @@
           }
       </style>
 
+      <style tal:condition="python: 'HEB' in context.getId()" type="text/css">
+
+          BIBLEBOOK {
+            direction: rtl;
+          }
+      </style>
+
       <div id="bible" tal:content="structure python: context.xml_get('xml_content')" />
 
 
