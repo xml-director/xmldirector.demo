@@ -19,7 +19,7 @@ mode = sys.argv[-1]
 if mode == 'docker':
     webdav_url = u'http://localhost:8080/exist/webdav/db'
 elif mode == 'local':
-    webdav_url = u'http://localhost:6080/exist/webdav/db'
+    webdav_url = u'http://localhost:8080/exist/webdav/db'
 else:
     raise ValueError('mode must be "local" or "docker"')
 
@@ -60,8 +60,6 @@ image.reindexObject()
 
 
 frontpage_text = """
-<img src="logo" width="400" style="display: none"/>
-<br/>
 <br/>
 <p>Login with username <b>demo</b> and password <b>demo</b>.</p>
 <br/>
