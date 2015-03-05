@@ -98,7 +98,7 @@ for name in os.listdir(import_dir):
     if not name.endswith('.xml'):
         continue
     dok = plone.api.content.create(
-        type='xmldirector.demo.bibledocument',
+        type='xmldirector.demo.modsdocument',
         container=folder,
         id=name,
         title=name)
