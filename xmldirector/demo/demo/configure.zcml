@@ -44,6 +44,23 @@
         attribute="asHTML"
     />
 
+    <!-- ModsDocument demo content -->
+    <browser:page
+        for=".modsdocument.IMODSDocument"
+        name="modsdocument_view"
+        permission="zope2.View"
+        class=".modsdocument_view.MODSDocument"
+        template="modsdocument_view.pt"
+    />
+
+    <browser:page
+        for=".modsdocument.IMODSDocument"
+        name="asHTML"
+        permission="zope2.View"
+        class=".modsdocument_view.MODSDocument"
+        attribute="asHTML"
+    />
+
     <browser:resourceDirectory
         name="xmldirector.demo"
         directory="resources"
@@ -57,6 +74,11 @@
     <pp:resourceDirectory
         name="bible"
         directory="resources_bible"
+        />
+
+    <pp:resourceDirectory
+        name="mods"
+        directory="resources_mods"
         />
 
     <!-- generic validation form -->

@@ -19,7 +19,7 @@ mode = sys.argv[-1]
 if mode == 'docker':
     webdav_url = u'http://localhost:8080/exist/webdav/db'
 elif mode == 'local':
-    webdav_url = u'http://localhost:8080/exist/webdav/db'
+    webdav_url = u'http://localhost:6080/exist/webdav/db'
 else:
     raise ValueError('mode must be "local" or "docker"')
 
@@ -90,6 +90,20 @@ for name in os.listdir(import_dir):
         title=name)
     bible_content = open(os.path.join(import_dir, name)).read()
     dok.xml_set('xml_content', unicode(bible_content, 'utf-8'))
+    dok.reindexObject()
+
+folder = plone.api.content.create(type='Folder', container=site, id='mods', title='Bibliography XML (MODS)')
+import_dir = os.path.join(pkg_resources.get_distribution('xmldirector.demo').location, 'democontent', 'mods')
+for name in os.listdir(import_dir):
+    if not name.endswith('.xml'):
+        continue
+    dok = plone.api.content.create(
+        type='xmldirector.demo.bibledocument',
+        container=folder,
+        id=name,
+        title=name)
+    content = open(os.path.join(import_dir, name)).read()
+    dok.xml_set('xml_content', unicode(content, 'utf-8'))
     dok.reindexObject()
 
 
