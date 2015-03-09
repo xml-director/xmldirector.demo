@@ -28,7 +28,7 @@
             margin-bottom: 1em;
           }
 
-          title {
+          titleinfo title {
             display: block;
             font-weight: bold;
           }
@@ -61,7 +61,7 @@
       </style>
 
 
-      <div id="bible" tal:content="structure python: context.xml_get('xml_content')" />
+      <div id="moods" tal:content="structure python: context.xml_get('xml_content')" />
 
 
   </metal:content-core>

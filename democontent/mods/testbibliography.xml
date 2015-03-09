@@ -45316,29 +45316,4 @@
         <detail type="volume"><number>submitted</number></detail>
     </part>
 </mods>
-<mods >
-    <titleInfo>
-        <title/>
-    </titleInfo>
-    <name type="personal">
-        <namePart type="given">Saharon</namePart>
-        <namePart type="family">Shelah</namePart>
-        <role>
-            <roleTerm authority="marcrelator" type="text">author</roleTerm>
-        </role>
-    </name>
-    <typeOfResource>text</typeOfResource>
-    <genre>journal article</genre>
-    <relatedItem type="host">
-        <titleInfo>
-            <title/>
-        </titleInfo>
-        <originInfo>
-            <issuance>continuing</issuance>
-        </originInfo>
-        <genre authority="marcgt">periodical</genre>
-        <genre>academic journal</genre>
-    </relatedItem>
-    <identifier type="citekey">Sh:1059</identifier>
-</mods>
 </modsCollection>

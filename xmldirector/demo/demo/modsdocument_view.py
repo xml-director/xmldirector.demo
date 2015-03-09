@@ -14,8 +14,4 @@ class MODSDocument(BrowserView):
 
     def asHTML(self):
         """ Generate a demo PDF """
-        xml = self.context.xml_get('xml_content')
-        root = lxml.etree.fromstring(xml)
-        for book in root.xpath('//BIBLEBOOK')[1:]:
-            book.getparent().remove(book)
-        return lxml.etree.tostring(root)
+        return self.context.xml_get('xml_content')
