@@ -9,7 +9,9 @@ import pkg_resources
 from Products.CMFPlone.factory import addPloneSite
 from AccessControl.SecurityManagement import newSecurityManager
 from xmldirector.plonecore.interfaces import IWebdavSettings
+from plone.app.textfield.value import RichTextValue
 from pp.client.plone.interfaces import IPPClientPloneSettings
+from plone import namedfile
 from plone.registry.interfaces import IRegistry
 from zope.component import getUtility
 
@@ -34,7 +36,12 @@ newSecurityManager(None, user.__of__(uf))
 if 'xml-director' in app.objectIds():
     app.manage_delObjects('xml-director')
 
-addPloneSite(app, 'xml-director', create_userfolder=True, extension_ids=['plonetheme.sunburst:default', 'xmldirector.demo:default', 'pp.client.plone:default'])
+try:
+
+    addPloneSite(app, 'xml-director', create_userfolder=True, extension_ids=['plonetheme.sunburst:default', 'xmldirector.demo:default', 'pp.client.plone:default'])
+except:
+    addPloneSite(app, 'xml-director', extension_ids=['plonetheme.barceloneta:default', 'xmldirector.demo:default', 'pp.client.plone:default'])
+
 site = app['xml-director']
 site.manage_delObjects(['events', 'news', 'Members'])
 pr = site.portal_registration
@@ -54,8 +61,19 @@ settings.server_password = u'demo'
 import_dir = os.path.join(pkg_resources.get_distribution('xmldirector.demo').location, 'democontent', 'images')
 
 image = plone.api.content.create(type='Image', container=site, id='logo')
-image.setImage(open(os.path.join(import_dir, 'xmldirector.png'), 'rb').read())
-image.setExcludeFromNav(True)
+
+img_data = open(os.path.join(import_dir, 'xmldirector.png'), 'rb').read()
+
+try:
+    image.setImage(img_data)
+except AttributeError:
+#    image.image = namedfile.NamedBlobImage(img_data, filename=u'logo.png', contentType='image/png')
+    pass
+
+try:
+    image.setExcludeFromNav(True)
+except:
+    pass
 image.reindexObject()
 
 
@@ -73,10 +91,30 @@ frontpage_text = """
 """
 
 page = site['front-page']
-page.setTitle('Welcome to the XML Director demo site')
-page.setDescription(None)
-page.setText(frontpage_text)
-page.setPresentation(False)
+try:
+    page.setTitle('Welcome to the XML Director demo site')
+except:
+#    page.title = u'Welcome to the XML Director demo site'
+    pass
+
+try:
+    page.setDescription(None)
+except AttributeError:
+#    page.description = None
+    pass
+
+try:
+    page.setText(frontpage_text)
+except AttributeError:
+#    page.text = RichTextValue((unicode(frontpage_text, 'utf-8'), 'text/html', 'text/html'))
+    pass
+
+
+try:
+    page.setPresentation(False)
+except AttributeError:
+    pass
+
 page.reindexObject()
 
 folder = plone.api.content.create(type='Folder', container=site, id='bible', title='Bible XML')
