@@ -43,8 +43,8 @@ except:
     addPloneSite(app, 'xml-director', extension_ids=['plonetheme.barceloneta:default', 'xmldirector.plonecore:default', 'xmldirector.demo:default', 'pp.client.plone:default'])
 
 site = app['xml-director']
-site.uninstallProducts(['xmldirector.plonecore'])
-site.installProducts(['xmldirector.plonecore'])
+site.portal_quickinstaller.uninstallProducts(['xmldirector.plonecore'])
+site.portal_quickinstaller.installProducts(['xmldirector.plonecore'])
 
 site.manage_delObjects(['events', 'news', 'Members'])
 pr = site.portal_registration
