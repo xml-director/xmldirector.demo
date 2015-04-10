@@ -108,7 +108,7 @@ except AttributeError:
 try:
     page.setText(frontpage_text)
 except AttributeError:
-    page.text = RichTextValue((unicode(frontpage_text, 'utf-8'), 'text/html', 'text/html'))
+    page.text = RichTextValue(unicode(frontpage_text, 'utf-8'), 'text/html', 'text/html')
 
 
 try:
