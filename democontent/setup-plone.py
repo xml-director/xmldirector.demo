@@ -40,9 +40,12 @@ try:
 
     addPloneSite(app, 'xml-director', create_userfolder=True, extension_ids=['plonetheme.sunburst:default', 'xmldirector.demo:default', 'pp.client.plone:default'])
 except:
-    addPloneSite(app, 'xml-director', extension_ids=['plonetheme.barceloneta:default', 'xmldirector.demo:default', 'pp.client.plone:default'])
+    addPloneSite(app, 'xml-director', extension_ids=['plonetheme.barceloneta:default', 'xmldirector.plonecore:default', 'xmldirector.demo:default', 'pp.client.plone:default'])
 
 site = app['xml-director']
+site.uninstallProducts(['xmldirector.plonecore'])
+site.installProducts(['xmldirector.plonecore'])
+
 site.manage_delObjects(['events', 'news', 'Members'])
 pr = site.portal_registration
 pr.addMember('demo', 'demo', roles=('Editor','Reader'))
@@ -67,8 +70,7 @@ img_data = open(os.path.join(import_dir, 'xmldirector.png'), 'rb').read()
 try:
     image.setImage(img_data)
 except AttributeError:
-#    image.image = namedfile.NamedBlobImage(img_data, filename=u'logo.png', contentType='image/png')
-    pass
+    image.image = namedfile.NamedBlobImage(img_data, filename=u'logo.png', contentType='image/png')
 
 try:
     image.setExcludeFromNav(True)
@@ -106,8 +108,7 @@ except AttributeError:
 try:
     page.setText(frontpage_text)
 except AttributeError:
-#    page.text = RichTextValue((unicode(frontpage_text, 'utf-8'), 'text/html', 'text/html'))
-    pass
+    page.text = RichTextValue((unicode(frontpage_text, 'utf-8'), 'text/html', 'text/html'))
 
 
 try:
