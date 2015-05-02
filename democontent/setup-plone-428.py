@@ -28,10 +28,11 @@ if 'xml-director' in app.objectIds():
     app.manage_delObjects('xml-director')
 
 try:
-
+    import plonetheme.sunburst
     addPloneSite(app, 'xml-director', create_userfolder=True, extension_ids=['plonetheme.sunburst:default', 'xmldirector.demo:default', 'pp.client.plone:default'])
 except:
     addPloneSite(app, 'xml-director', extension_ids=['plonetheme.barceloneta:default', 'xmldirector.plonecore:default', 'xmldirector.demo:default', 'pp.client.plone:default'])
+        
 
 site = app['xml-director']
 #site.portal_quickinstaller.uninstallProducts(['xmldirector.plonecore'])
