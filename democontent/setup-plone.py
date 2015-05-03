@@ -37,9 +37,9 @@ if 'xml-director' in app.objectIds():
     app.manage_delObjects('xml-director')
 
 try:
-
+    import plonetheme.sunburt
     addPloneSite(app, 'xml-director', create_userfolder=True, extension_ids=['plonetheme.sunburst:default', 'xmldirector.demo:default', 'pp.client.plone:default'])
-except:
+except ImportError:
     addPloneSite(app, 'xml-director', extension_ids=['plonetheme.barceloneta:default', 'xmldirector.plonecore:default', 'xmldirector.demo:default', 'pp.client.plone:default'])
 
 site = app['xml-director']
@@ -157,7 +157,7 @@ for name in sorted(os.listdir(import_dir)):
     fname = os.path.join(import_dir, name)
     with open(fname, 'rb') as fp:
         xml = unicode(fp.read(), 'utf8')
-        root = lxml.etree.fromstring(xml.encode('utf8'))
+        root = defused.xml.fromstring(xml.encode('utf8'))
         title = root.xpath('//title')[0].text
         dok = plone.api.content.create(
                 type='xmldirector.demo.xmldocument',
