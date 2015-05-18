@@ -4,6 +4,7 @@ import os
 import lxml.etree
 import plone.api
 import grampg
+import defusedxml
 import transaction
 import pkg_resources
 from Products.CMFPlone.factory import addPloneSite
