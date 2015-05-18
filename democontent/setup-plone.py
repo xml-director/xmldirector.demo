@@ -4,7 +4,7 @@ import os
 import lxml.etree
 import plone.api
 import grampg
-import defusedxml
+import defusedxml.lxml
 import transaction
 import pkg_resources
 from Products.CMFPlone.factory import addPloneSite
@@ -158,7 +158,7 @@ for name in sorted(os.listdir(import_dir)):
     fname = os.path.join(import_dir, name)
     with open(fname, 'rb') as fp:
         xml = unicode(fp.read(), 'utf8')
-        root = defusedxml.fromstring(xml.encode('utf8'))
+        root = defusedxml.lxml.fromstring(xml.encode('utf8'))
         title = root.xpath('//title')[0].text
         dok = plone.api.content.create(
                 type='xmldirector.demo.xmldocument',
