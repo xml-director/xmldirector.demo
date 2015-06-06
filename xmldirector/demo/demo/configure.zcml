@@ -43,6 +43,16 @@
         class=".bibledocument_view.BibleDocument"
         attribute="asHTML"
     />
+    
+    <!-- MusicXML demo content -->
+    <browser:page
+        for=".musicxml.MusicXML"
+        name="musicxml_render"
+        permission="zope2.View"
+        class=".musicxml.MusicXMLView"
+        attribute="render"
+    />
+
 
     <!-- ModsDocument demo content -->
     <browser:page

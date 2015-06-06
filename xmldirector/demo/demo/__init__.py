@@ -11,6 +11,7 @@ from xmldirector.plonecore.validator_registry import ValidatorRegistryUtility
 
 import xmldocument  # NOQA
 import bibledocument  # NOQA
+import musicxml
 
 cwd = os.path.dirname(__file__)
 
