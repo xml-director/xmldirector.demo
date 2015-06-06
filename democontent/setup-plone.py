@@ -157,7 +157,10 @@ for name in os.listdir(import_dir):
         id=name,
         title=name)
     content = open(os.path.join(import_dir, name)).read()
-    dok.xml_set('xml_content', unicode(content, 'utf-8'))
+    try:
+        dok.xml_set('xml_content', unicode(content, 'utf-8'))
+    except UnicodeDecodeError:
+        dok.xml_set('xml_content', unicode(content, 'utf-16'))
     dok.reindexObject()
 
 folder = plone.api.content.create(type='Folder', container=site, id='shakespeare', title='Shakespeare XML')
