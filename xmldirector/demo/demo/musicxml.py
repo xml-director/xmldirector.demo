@@ -10,6 +10,8 @@ A sample Dexterity content-type implementation using
 all XML field types.
 """
 
+import os
+import tempfile
 
 from zope.interface import implements
 from plone.dexterity.content import Item
@@ -22,6 +24,8 @@ from xmldirector.plonecore.dx.xml_binary import XMLBinary
 from xmldirector.plonecore.dx.xml_image import XMLImage
 from xmldirector.plonecore.dx.xml_field import XMLText
 from xmldirector.plonecore.dx.xpath_field import XMLXPath
+
+from Products.Five.browser import BrowserView
 
 
 class IMusicXML(model.Schema):
@@ -36,28 +40,27 @@ class MusicXML(Item, dexterity_base.Mixin):
 
     implements(IMusicXML)
 
-from Products.Five.browser import BrowserView
 
 
 class MusicXMLView(BrowserView):
 
-
     def render(self):
 
 
-        import os
-        import tempfile
+        xml_out = tempfile.mktemp(suffix='.xml')
+        with open(xml_out, 'wb') as fp:
+            xml = self.context.xml_get('xml_content')
+            fp.write(xml.encode('utf8'))
 
-        out = tempfile.mktemp(suffix='.xml')
-        pdf= tempfile.mktemp(suffix='.pdf')
-        xml = self.context.xml_get('xml_content')
-        open(out, 'wb').write(xml.encode('utf8'))
+        cmd = 'mscore "{}" -o "{}"'.format(xml_out, pdf_out)
+        os.system(cmd)
 
-        cmd = 'mscore "{}" -o "{}"'.format(out, pdf)
-        print cmd
-        print os.system(cmd)
+        pdf_out= tempfile.mktemp(suffix='.pdf')
+        with open(pdf_out, 'rb') as fp
+            pdfdata = fp.read()
 
-        pdfdata = open(pdf, 'rb').read()
+        os.unlink(xml_out)
+        os.unlink(pdf_out)
 
         self.request.response.setHeader('content-type', 'application/pdf')
         self.request.response.setHeader('content-length', str(len(pdfdata)))
