@@ -56,7 +56,7 @@ class MusicXMLView(BrowserView):
         os.system(cmd)
 
         pdf_out= tempfile.mktemp(suffix='.pdf')
-        with open(pdf_out, 'rb') as fp
+        with open(pdf_out, 'rb') as fp:
             pdfdata = fp.read()
 
         os.unlink(xml_out)
