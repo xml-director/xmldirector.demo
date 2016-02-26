@@ -19,7 +19,7 @@
 
         </style>
 
-      <div class="error" i18n:translate="">XML Document content-type custom view (using XSLT)</div>
+      <h2 class="error" i18n:translate="">XML Document content-type custom view (using XSLT)</h2>
 
       <div>
           <a tal:attributes="href string:${context/absolute_url}/@@asPDF?resource=shakespeare" style="border: none">
