@@ -61,6 +61,9 @@
             <div tal:condition="view/have_docx">
                 <a tal:attributes="href string:${context/absolute_url}/@@view/src/index.docx">Your uploaded DOCX</a>
             </div>
+            <div>
+                <a tal:attributes="href string:${context/absolute_url}/@@view">Browse all files</a>
+            </div>
 
             <div tal:condition="view/have_html">
                 <a tal:attributes="href string:${context/absolute_url}/@@view/result/html/index.html">HTML</a>
