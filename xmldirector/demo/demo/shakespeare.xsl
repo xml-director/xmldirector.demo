@@ -17,12 +17,12 @@
 			</title>
 		</head>
 		<body>
-			<h1 class="title">
+			<h2 class="title">
 				<xsl:value-of select="$title"/>
-			</h1>
-			<h2 class="playwright">
+			</h2>
+			<h3 class="playwright">
 				<xsl:value-of select="playwright"/>
-            </h2>			
+            </h3>			
 
 			<div class="edition">
 				<xsl:value-of select="edition"/>
