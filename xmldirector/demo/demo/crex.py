@@ -44,6 +44,11 @@ class CREX(BrowserView):
         if handle:
             return handle.exists('result/html/index.html')
 
+    def have_dita(self):
+        handle = self.handle
+        if handle:
+            return handle.exists('result/dita')
+
     def upload_docx(self):
         handle = self.handle
         docx = self.request.form['docx'].read()
@@ -95,7 +100,7 @@ class CREX(BrowserView):
         handle = self.handle
         with handle.open('src/index.docx', 'rb') as fp_in:
             with ZipFile(zip_tmp, 'w') as fp_out:
-                fp_out.writestr('src/index.docx', fp_in.read())
+                fp_out.writestr('index.docx', fp_in.read())
 
         result_zip_fn = convert_crex(zip_tmp, crex_url, crex_username, crex_password)
 

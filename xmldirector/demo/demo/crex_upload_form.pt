@@ -72,6 +72,9 @@
             <div tal:condition="view/have_xml">
                 <a tal:attributes="href string:${context/absolute_url}/@@view/result/xml/index.xml">XML</a>
             </div>
+            <div tal:condition="view/have_dita">
+                <a tal:attributes="href string:${context/absolute_url}/@@view/result/dita">DITA</a>
+            </div>
         </div>
     </metal:content-core>
 </metal:main>
