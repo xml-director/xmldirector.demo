@@ -28,6 +28,14 @@
                 border-top: 1px solid grey;
             }
 
+            button {
+                height: 30px;
+                margin-right: 2em;
+                padding-left: 1em;
+                padding-right: 1em;
+                font-weight: bold;
+            }
+
         </style>
 
         <tal:if condition="python: context.portal_type == 'Folder'">
