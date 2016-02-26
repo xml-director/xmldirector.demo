@@ -108,5 +108,63 @@
         permission="zope2.View"
     />
 
+    <!-- CREX -->
+
+    <browser:page
+        for="*"
+        name="crex-upload-form"
+        class=".crex.CREX"
+        template="crex_upload_form.pt"
+        permission="zope2.View"
+    />
+
+    <browser:page
+        for="*"
+        name="new-connector"
+        class=".crex.CREX"
+        attribute="new_connector"
+        permission="cmf.ModifyPortalContent"
+    />
+
+    <browser:page
+        for="*"
+        name="upload_docx"
+        class=".crex.CREX"
+        attribute="upload_docx"
+        permission="cmf.ModifyPortalContent"
+    />
+
+    <browser:page
+        for="*"
+        name="convert-dghodoc"
+        class=".crex.CREX"
+        attribute="convert_dghodoc"
+        permission="cmf.ModifyPortalContent"
+    />
+
+    <browser:page
+        for="*"
+        name="convert-dita-single-topic"
+        class=".crex.CREX"
+        attribute="convert_single_topic"
+        permission="cmf.ModifyPortalContent"
+    />
+
+    <browser:page
+        for="*"
+        name="convert-dita-split-topic"
+        class=".crex.CREX"
+        attribute="convert_split_topic"
+        permission="cmf.ModifyPortalContent"
+    />
+
+    <browser:page
+        for="*"
+        name="convert-cleanup"
+        class=".crex.CREX"
+        attribute="cleanup"
+        permission="cmf.ModifyPortalContent"
+    />
+
 
 </configure>

@@ -9,7 +9,7 @@ import transaction
 import pkg_resources
 from Products.CMFPlone.factory import addPloneSite
 from AccessControl.SecurityManagement import newSecurityManager
-from xmldirector.plonecore.interfaces import IWebdavSettings
+from xmldirector.plonecore.interfaces import IConnectorSettings
 from plone.app.textfield.value import RichTextValue
 from pp.client.plone.interfaces import IPPClientPloneSettings
 from plone import namedfile
@@ -20,12 +20,11 @@ from zope.component import getUtility
 
 mode = sys.argv[-1]
 if mode == 'docker':
-    webdav_url = u'http://localhost:8080/exist/webdav/db'
+    connector_url = u'http://localhost:8080/exist/webdav/db'
 elif mode == 'local':
-    webdav_url = u'http://localhost:6080/exist/webdav/db'
+    connector_url = u'http://localhost:6080/exist/webdav/db'
 else:
     raise ValueError('mode must be "local" or "docker"')
-
 
 admin_pw = grampg.PasswordGenerator().of().between(100, 200, 'letters').done().generate()
 
@@ -52,10 +51,10 @@ pr = site.portal_registration
 pr.addMember('demo', 'demo', roles=('Editor','Reader'))
 
 registry = getUtility(IRegistry)
-settings = registry.forInterface(IWebdavSettings)
-settings.webdav_url = webdav_url
-settings.webdav_username = u'admin'
-settings.webdav_password = u'admin'
+settings = registry.forInterface(IConnectorSettings)
+settings.connector_url = connector_url
+settings.connector_username = u'admin'
+settings.connector_password = u'onkopedia'
 
 settings = registry.forInterface(IPPClientPloneSettings)
 settings.server_url = u'https://pp-server.zopyx.com'
@@ -118,6 +117,14 @@ except AttributeError:
     pass
 
 page.reindexObject()
+
+folder = plone.api.content.create(type='Folder', container=site, id='crex-docx-xml', title='CREX: DOCX-to-XML')
+folder.setLayout('crex-upload-form')
+
+print 'commited'
+transaction.commit()
+sys.exit(0)
+
 
 folder = plone.api.content.create(type='Folder', container=site, id='bible', title='Bible XML')
 

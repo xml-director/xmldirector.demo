@@ -10,13 +10,66 @@
 <metal:main fill-slot="content-core">
     <metal:content-core define-macro="content-core">
 
+
+        <style type="text/css">
+
+            #form-info {
+                background: #ddd;
+                color: block;
+                border: 2px solid #aaa;
+                border-radius: 10px;
+                padding: 0.5em;
+                margin-top: 1em;
+                margin-bottom: 1em;
+            }
+
+            #generated-files {
+                margin-top: 2em;
+                border-top: 1px solid grey;
+            }
+
+        </style>
+
         <tal:if condition="python: context.portal_type == 'Folder'">
             <a tal:attributes="href string:${context/absolute_url}/new-connector">Start new DOCX -> XML conversion</a>
         </tal:if>
 
         <tal:if condition="python: context.portal_type != 'Folder'">
 
+            <div id="form-info">This form allows you to upload a DOCX file into XML Director</div>
+
+            <form method="post" tal:attributes="action string:${context/absolute_url}/upload_docx" enctype="multipart/form-data">
+                <input type="file" name="docx" />
+                <br/><br/>
+                <input class="context" type="submit" value="Upload DOCX"/>
+            </form>
+
         </tal:if>
+
+        <tal:if condition="view/have_docx">
+            <br/>
+            <a tal:attributes="href string:${context/absolute_url}/@@convert-cleanup"><button>Cleanup all files</button></a>
+            <br/>
+            <br/>
+            <a tal:attributes="href string:${context/absolute_url}/@@convert-dghodoc"><button>Convert to XML/HTML</button></a>
+            <a tal:attributes="href string:${context/absolute_url}/@@convert-dita-single-topic"><button>Convert to DITA (single topic)</button></a>
+            <a tal:attributes="href string:${context/absolute_url}/@@convert-dita-split-topic"><button>Convert to DITA (split topics)</button></a>
+        </tal:if>
+
+        <div id="generated-files" tal:condition="python: context.portal_type != 'Folder'">
+            <h2>Generated files</h2>
+            <div tal:condition="view/have_docx">
+                <a tal:attributes="href string:${context/absolute_url}/@@view/src/index.docx">Your uploaded DOCX</a>
+            </div>
+
+            <div tal:condition="view/have_html">
+                <a tal:attributes="href string:${context/absolute_url}/@@view/result/html/index.html">HTML</a>
+            </div>
+
+            <div tal:condition="view/have_xml">
+                <a tal:attributes="href string:${context/absolute_url}/@@view/result/xml/index.xml">XML</a>
+            </div>
+        </div>
     </metal:content-core>
 </metal:main>
 
