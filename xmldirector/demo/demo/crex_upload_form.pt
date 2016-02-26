@@ -66,23 +66,23 @@
 
         <div id="generated-files" tal:condition="python: context.portal_type != 'Folder'">
             <h2>Generated files</h2>
-            <div tal:condition="view/have_docx">
-                <a tal:attributes="href string:${context/absolute_url}/@@view/src/index.docx">Your uploaded DOCX</a>
-            </div>
-            <div>
-                <a tal:attributes="href string:${context/absolute_url}/@@view">Browse all files</a>
-            </div>
+            <span tal:condition="view/have_docx">
+                <a tal:attributes="href string:${context/absolute_url}/@@view/src/index.docx"><button>Your uploaded DOCX</button></a>
+            </span>
+            <span>
+                <a tal:attributes="href string:${context/absolute_url}/@@view"><button>Browse all files</button></a>
+            </span>
 
-            <div tal:condition="view/have_html">
-                <a tal:attributes="href string:${context/absolute_url}/@@view/result/html/index.html">HTML</a>
-            </div>
+            <span tal:condition="view/have_html">
+                <a tal:attributes="href string:${context/absolute_url}/@@view/result/html/index.html"><button>HTML</button></a>
+            </span>
 
-            <div tal:condition="view/have_xml">
-                <a tal:attributes="href string:${context/absolute_url}/@@view/result/xml/index.xml">XML</a>
-            </div>
-            <div tal:condition="view/have_dita">
-                <a tal:attributes="href string:${context/absolute_url}/@@view/result/dita">DITA</a>
-            </div>
+            <span tal:condition="view/have_xml">
+                <a tal:attributes="href string:${context/absolute_url}/@@view/result/xml/index.xml"><button>XML</button></a>
+            </span>
+            <span tal:condition="view/have_dita">
+                <a tal:attributes="href string:${context/absolute_url}/@@view/result/dita"><button>DITA</button></a>
+            </span>
         </div>
     </metal:content-core>
 </metal:main>
