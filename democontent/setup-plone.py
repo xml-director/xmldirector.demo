@@ -38,7 +38,7 @@ if 'xml-director' in app.objectIds():
 
 try:
     import plonetheme.sunburst
-    addPloneSite(app, 'xml-director', create_userfolder=True, extension_ids=['plonetheme.sunburst:default', 'xmldirector.demo:default', 'pp.client.plone:default'])
+    addPloneSite(app, 'xml-director', create_userfolder=True, extension_ids=['plonetheme.sunburst:default', 'xmldirector.demo:default', 'pp.client.plone:default', 'vs.bootstrap.plonetheme:default', 'xmldirector.crex:default'])
 except ImportError:
     addPloneSite(app, 'xml-director', extension_ids=['plonetheme.barceloneta:default', 'xmldirector.plonecore:default', 'xmldirector.demo:default', 'pp.client.plone:default'])
 
@@ -120,11 +120,6 @@ page.reindexObject()
 
 folder = plone.api.content.create(type='Folder', container=site, id='crex-docx-xml', title='CREX: DOCX-to-XML')
 folder.setLayout('crex-upload-form')
-
-print 'commited'
-transaction.commit()
-sys.exit(0)
-
 
 folder = plone.api.content.create(type='Folder', container=site, id='bible', title='Bible XML')
 
