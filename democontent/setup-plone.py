@@ -38,13 +38,13 @@ if 'xml-director' in app.objectIds():
 
 try:
     import plonetheme.sunburst
-    addPloneSite(app, 'xml-director', create_userfolder=True, extension_ids=['plonetheme.sunburst:default', 'xmldirector.demo:default', 'pp.client.plone:default', 'vs.bootstrap.plonetheme:default', 'xmldirector.crex:default'])
+    addPloneSite(app, 'xml-director', create_userfolder=True, extension_ids=['plonetheme.sunburst:default', 'xmldirector.demo:default', 'pp.client.plone:default', 'vs.bootstrap.plonetheme:default', 'xmldirector.crex:default', 'xmldirector.plonecore:default'])
 except ImportError:
     addPloneSite(app, 'xml-director', extension_ids=['plonetheme.barceloneta:default', 'xmldirector.plonecore:default', 'xmldirector.demo:default', 'pp.client.plone:default'])
 
 site = app['xml-director']
-site.portal_quickinstaller.uninstallProducts(['xmldirector.plonecore'])
-site.portal_quickinstaller.installProducts(['xmldirector.plonecore'])
+#site.portal_quickinstaller.uninstallProducts(['xmldirector.plonecore'])
+#site.portal_quickinstaller.installProducts(['xmldirector.plonecore'])
 
 site.manage_delObjects(['events', 'news', 'Members'])
 pr = site.portal_registration
