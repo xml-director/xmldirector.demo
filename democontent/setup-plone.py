@@ -48,7 +48,7 @@ site = app['xml-director']
 
 site.manage_delObjects(['events', 'news', 'Members'])
 pr = site.portal_registration
-pr.addMember('demo', 'demo', roles=('Editor','Reader'))
+pr.addMember('demo', 'demo', roles=('Editor','Reader', 'Manager'))
 
 registry = getUtility(IRegistry)
 settings = registry.forInterface(IConnectorSettings)
@@ -122,6 +122,7 @@ folder = plone.api.content.create(type='Folder', container=site, id='crex-docx-x
 folder.setLayout('crex-upload-form')
 
 folder = plone.api.content.create(type='Folder', container=site, id='bible', title='Bible XML')
+plone.api.content.transition(folder, 'publish')
 
 import_dir = os.path.join(pkg_resources.get_distribution('xmldirector.demo').location, 'democontent', 'bible')
 for name in os.listdir(import_dir):
