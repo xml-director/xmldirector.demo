@@ -31,7 +31,8 @@ setup(name='xmldirector.demo',
           'setuptools',
           'xmldirector.plonecore',
           'xmldirector.crex',
-          'vs.bootstrap.plonetheme'
+          'vs.bootstrap.plonetheme',
+          'z3c.jbot',
           # -*- Extra requirements: -*-
       ],
       tests_require=['zope.testing'],

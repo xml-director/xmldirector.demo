@@ -21,4 +21,9 @@
         provides="Products.GenericSetup.interfaces.EXTENSION"
     />
 
+
+    <include package="z3c.jbot" file="meta.zcml" />
+    <browser:jbot
+        directory="overrides" />
+
 </configure>
