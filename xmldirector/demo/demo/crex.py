@@ -22,7 +22,6 @@ class CREX(BrowserView):
             return None
 
     def new_connector(self):
-
         connector = plone.api.content.create(type='xmldirector.plonecore.connector', container=self.context, title=u'CREX DOCX to XML conversion')
         connector.setLayout('crex-upload-form')
         connector.connector_subpath = str(uuid.uuid1())

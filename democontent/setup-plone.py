@@ -54,12 +54,12 @@ registry = getUtility(IRegistry)
 settings = registry.forInterface(IConnectorSettings)
 settings.connector_url = connector_url
 settings.connector_username = u'admin'
-settings.connector_password = u'admin'
+settings.connector_password = u'onkopedia' if mode == 'local' else 'docker'
 
 settings = registry.forInterface(IPPClientPloneSettings)
 settings.server_url = u'https://pp-server.zopyx.com'
 settings.server_username = u'demo'
-settings.server_password = u'demo'
+settings.server_password = u'demo' 
 
 import_dir = os.path.join(pkg_resources.get_distribution('xmldirector.demo').location, 'democontent', 'images')
 
