@@ -54,7 +54,7 @@ registry = getUtility(IRegistry)
 settings = registry.forInterface(IConnectorSettings)
 settings.connector_url = connector_url
 settings.connector_username = u'admin'
-settings.connector_password = u'onkopedia' if mode == 'local' else 'docker'
+settings.connector_password = u'onkopedia' if mode == 'local' else u'admin'
 
 settings = registry.forInterface(IPPClientPloneSettings)
 settings.server_url = u'https://pp-server.zopyx.com'
