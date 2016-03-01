@@ -57,10 +57,6 @@
         </tal:if>
 
         <tal:if condition="view/have_docx">
-            <br/>
-            <a tal:attributes="href string:${context/absolute_url}/@@convert-cleanup"><button>Cleanup all files</button></a>
-            <br/>
-            <br/>
             <a tal:attributes="href string:${context/absolute_url}/@@convert-dghodoc"><button>Convert to XML/HTML</button></a>
             <a tal:attributes="href string:${context/absolute_url}/@@convert-dita-single-topic"><button>Convert to DITA (single topic)</button></a>
             <a tal:attributes="href string:${context/absolute_url}/@@convert-dita-split-topic"><button>Convert to DITA (split topics)</button></a>
@@ -68,13 +64,20 @@
 
         <div id="generated-files" tal:condition="python: context.portal_type != 'Folder'">
             <h2>Generated files</h2>
-            <span tal:condition="view/have_docx">
-                <a tal:attributes="href string:${context/absolute_url}/@@view/src/index.docx"><button>Your uploaded DOCX</button></a>
-            </span>
             <span>
                 <a tal:attributes="href string:${context/absolute_url}/@@view"><button>Browse all files</button></a>
             </span>
-
+            <span>
+                <a tal:attributes="href string:${context/absolute_url}/@@connector-export-zip"><button>Export all files as ZIP</button></a>
+            </span>
+            <span>
+                <a tal:attributes="href string:${context/absolute_url}/@@convert-cleanup"><button>Cleanup all files</button></a>
+            </span>
+            <br/>
+            <br/>
+            <span tal:condition="view/have_docx">
+                <a tal:attributes="href string:${context/absolute_url}/@@view/src/index.docx"><button>Your uploaded DOCX</button></a>
+            </span>
             <span tal:condition="view/have_html">
                 <a tal:attributes="href string:${context/absolute_url}/@@view/result/html/index.html"><button>HTML</button></a>
             </span>
