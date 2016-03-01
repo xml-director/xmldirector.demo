@@ -68,7 +68,7 @@
                 <a tal:attributes="href string:${context/absolute_url}/@@view"><button>Browse all files</button></a>
             </span>
             <span>
-                <a tal:attributes="href string:${context/absolute_url}/@@connector-export-zip"><button>Export all files as ZIP</button></a>
+                <a tal:attributes="href string:${context/absolute_url}/@@connector-zip-export"><button>Export all files as ZIP</button></a>
             </span>
             <span>
                 <a tal:attributes="href string:${context/absolute_url}/@@convert-cleanup"><button>Cleanup all files</button></a>
