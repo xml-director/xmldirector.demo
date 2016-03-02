@@ -11,6 +11,9 @@ from zipfile import ZipFile
 import plone.api
 from Products.Five.browser import BrowserView
 
+from xmldirector.plonecore.browser.restapi import store_zip
+from xmldirector.crex.browser.restapi import convert_crex
+
 
 class CREX(BrowserView):
 
@@ -93,8 +96,6 @@ class CREX(BrowserView):
 
     def convert_crex(self, crex_url, crex_username, crex_password):
 
-        from xmldirector.crex.browser.restapi import convert_crex
-
         zip_tmp = tempfile.mktemp(suffix='.zip')
         handle = self.handle
         with handle.open('src/index.docx', 'rb') as fp_in:
@@ -102,17 +103,7 @@ class CREX(BrowserView):
                 fp_out.writestr('index.docx', fp_in.read())
 
         result_zip_fn = convert_crex(zip_tmp, crex_url, crex_username, crex_password)
-
-        if handle.exists('result'):
-            handle.removedir('result', recursive=True, force=True)
-
-        with ZipFile(result_zip_fn, 'r') as fp_in:
-            for name in fp_in.namelist():
-                dirname = os.path.dirname(name).lstrip('/')
-                if not handle.exists(dirname):
-                    handle.makedir(dirname, recursive=True)
-                with handle.open(name.lstrip('/'), 'wb') as fp_out:
-                    fp_out.write(fp_in.read(name))
+        store_zip(self.context, result_zip_fn, 'result')
 
         self.context.plone_utils.addPortalMessage(u'Conversion results stored')
         return self.request.response.redirect(self.context.absolute_url())
