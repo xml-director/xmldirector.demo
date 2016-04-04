@@ -12,6 +12,7 @@ from AccessControl.SecurityManagement import newSecurityManager
 from xmldirector.plonecore.interfaces import IConnectorSettings
 from plone.app.textfield.value import RichTextValue
 from pp.client.plone.interfaces import IPPClientPloneSettings
+from xmldirector.bookalope.interfaces import IBookalopePloneSettings
 from plone import namedfile
 from plone.registry.interfaces import IRegistry
 from zope.component import getUtility
@@ -38,7 +39,7 @@ if 'xml-director' in app.objectIds():
 
 try:
     import plonetheme.sunburst
-    addPloneSite(app, 'xml-director', create_userfolder=True, extension_ids=['plonetheme.sunburst:default', 'xmldirector.demo:default', 'pp.client.plone:default', 'vs.bootstrap.plonetheme:default', 'xmldirector.crex:default', 'xmldirector.plonecore:default'])
+    addPloneSite(app, 'xml-director', create_userfolder=True, extension_ids=['plonetheme.sunburst:default', 'xmldirector.demo:default', 'pp.client.plone:default', 'vs.bootstrap.plonetheme:default', 'xmldirector.crex:default', 'xmldirector.bookalope:default', 'xmldirector.plonecore:default'])
 except ImportError:
     addPloneSite(app, 'xml-director', extension_ids=['plonetheme.barceloneta:default', 'xmldirector.plonecore:default', 'xmldirector.demo:default', 'pp.client.plone:default'])
 
@@ -60,6 +61,12 @@ settings = registry.forInterface(IPPClientPloneSettings)
 settings.server_url = u'https://pp-server.zopyx.com'
 settings.server_username = u'demo'
 settings.server_password = u'demo' 
+
+registry = getUtility(IRegistry)
+settings = registry.forInterface(IBookalopeSettings)
+settings.bookalope_beta = True
+settings.bookalope_api_key = '051d17836932453f8bc962a442a35543'
+
 
 import_dir = os.path.join(pkg_resources.get_distribution('xmldirector.demo').location, 'democontent', 'images')
 

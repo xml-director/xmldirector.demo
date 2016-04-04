@@ -109,46 +109,18 @@ class CREX(BrowserView):
         return self.request.response.redirect(self.context.absolute_url())
 
     def convert_bookalope(self):
-        import pdb; pdb.set_trace() 
 
-        import bookalope
+        from xmldirector.bookalope.browser import api
 
-
-        b_client = bookalope.BookalopeClient(beta_host=True)
-        b_client.token = '051d17836932453f8bc962a442a35543'
-
-
-        book = b_client.create_book()
-        bookflow = book.bookflows[0]
-
-        bookflow.title = 'XML Director Bookalope demo'
-        bookflow.author = 'xml-director.info (Andreas Jung/ZOPYX)'
-        bookflow.save()
-
-        handle = self.handle
-        with handle.open('src/index.docx', 'rb') as doc:
-            bookflow.set_document('index.docx', doc.read())
-
-        formats = [fext for format_ in b_client.get_export_formats() for fext in format_.file_exts]
-
-        if not handle.exists('result'):
-            handle.makedir('result')
-
-        for format_ in formats:
-            print("Converting and downloading " + format_ + "...")
-
-            # Get the Style instance for the default styling.
-            styles = b_client.get_styles(format_)
-            default_style = next(_ for _ in styles if _.short_name == "default")
-            converted_bytes = bookflow.convert(format_, default_style, version="test")
-
-            # Save the converted document.
-            fname = "result/{}.{}".format(bookflow.id, format_)
-            with handle.open(fname, "wb") as doc_conv:
-                doc_conv.write(converted_bytes)
-
-        print("Deleting book and all bookflows...")
-        book.delete()
+        formats = ['pdf', 'docx', 'epub', 'epub3', 'mobi']
+        api.convert_bookalope(
+                context=self.context,
+                source='src/index.docx', 
+                formats=formats,
+                title = 'XML Director Bookalope demo',
+                author = 'xml-director.info (Andreas Jung/ZOPYX)',
+                prefix='index'
+                )
 
         self.context.plone_utils.addPortalMessage(u'EBook formats generated and stored')
         return self.request.response.redirect(self.context.absolute_url())
