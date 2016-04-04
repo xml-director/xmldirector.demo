@@ -62,6 +62,10 @@
             <a tal:attributes="href string:${context/absolute_url}/@@convert-dita-split-topic"><button>Convert to DITA (split topics)</button></a>
         </tal:if>
 
+        <tal:if condition="view/have_docx">
+            <a tal:attributes="href string:${context/absolute_url}/@@convert-bookalope"><button>Convert to EBook formats (via bookalope.net)</button></a>
+        </tal:if>
+
         <div id="generated-files" tal:condition="python: context.portal_type != 'Folder'">
             <h2>Generated files</h2>
             <span>

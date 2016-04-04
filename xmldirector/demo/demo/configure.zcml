@@ -160,6 +160,14 @@
 
     <browser:page
         for="*"
+        name="convert-bookalope"
+        class=".crex.CREX"
+        attribute="convert_bookalope"
+        permission="cmf.ModifyPortalContent"
+    />
+
+    <browser:page
+        for="*"
         name="convert-cleanup"
         class=".crex.CREX"
         attribute="cleanup"

@@ -33,6 +33,8 @@ setup(name='xmldirector.demo',
           'xmldirector.crex',
           'vs.bootstrap.plonetheme',
           'z3c.jbot',
+          'babel', 
+          'requests',
           # -*- Extra requirements: -*-
       ],
       tests_require=['zope.testing'],
