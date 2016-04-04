@@ -12,7 +12,7 @@ from AccessControl.SecurityManagement import newSecurityManager
 from xmldirector.plonecore.interfaces import IConnectorSettings
 from plone.app.textfield.value import RichTextValue
 from pp.client.plone.interfaces import IPPClientPloneSettings
-from xmldirector.bookalope.interfaces import IBookalopePloneSettings
+from xmldirector.bookalope.interfaces import IBookalopeSettings
 from plone import namedfile
 from plone.registry.interfaces import IRegistry
 from zope.component import getUtility
@@ -65,7 +65,7 @@ settings.server_password = u'demo'
 registry = getUtility(IRegistry)
 settings = registry.forInterface(IBookalopeSettings)
 settings.bookalope_beta = True
-settings.bookalope_api_key = '051d17836932453f8bc962a442a35543'
+settings.bookalope_api_key = u'051d17836932453f8bc962a442a35543'
 
 
 import_dir = os.path.join(pkg_resources.get_distribution('xmldirector.demo').location, 'democontent', 'images')

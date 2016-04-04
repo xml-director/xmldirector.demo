@@ -122,5 +122,5 @@ class CREX(BrowserView):
                 prefix='index'
                 )
 
-        self.context.plone_utils.addPortalMessage(u'EBook formats generated and stored')
+        self.context.plone_utils.addPortalMessage(u'ebook formats generated and stored')
         return self.request.response.redirect(self.context.absolute_url())
