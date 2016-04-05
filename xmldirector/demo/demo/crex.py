@@ -112,10 +112,16 @@ class CREX(BrowserView):
 
         from xmldirector.bookalope.browser import api
 
+        dirname = os.path.dirname(__file__)
+        handle = self.context.get_handle()
+        with handle.open('src/cover.jpg', 'wb') as fp:
+            fp.write(open(os.path.join(dirname, 'cover.jpg'), 'rb').read())
+
         formats = ['pdf', 'docx', 'epub', 'epub3', 'mobi']
         api.convert_bookalope(
                 context=self.context,
                 source='src/index.docx', 
+#                cover='src/cover.jpg',
                 formats=formats,
                 title = 'XML Director Bookalope demo',
                 author = 'xml-director.info (Andreas Jung/ZOPYX)',
