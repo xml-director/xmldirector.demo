@@ -121,7 +121,7 @@ class CREX(BrowserView):
         api.convert_bookalope(
                 context=self.context,
                 source='src/index.docx', 
-#                cover='src/cover.jpg',
+                cover='src/cover.jpg',
                 formats=formats,
                 title = 'XML Director Bookalope demo',
                 author = 'xml-director.info (Andreas Jung/ZOPYX)',
