@@ -18,7 +18,7 @@ from plone.supermodel import model
 from xmldirector.plonecore.i18n import MessageFactory as _
 
 from xmldirector.plonecore.dx import dexterity_base
-from xmldirector.plonecore.dx.xml_field import XMLText
+from xmldirector.plonecore.dx.xmltext_field import XMLText
 
 
 class IBibleDocument(model.Schema):

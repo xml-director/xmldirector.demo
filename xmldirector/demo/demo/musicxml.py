@@ -20,9 +20,9 @@ from plone.supermodel import model
 from xmldirector.plonecore.i18n import MessageFactory as _
 
 from xmldirector.plonecore.dx import dexterity_base
-from xmldirector.plonecore.dx.xml_binary import XMLBinary
-from xmldirector.plonecore.dx.xml_image import XMLImage
-from xmldirector.plonecore.dx.xml_field import XMLText
+from xmldirector.plonecore.dx.xmlbinary_field import XMLBinary
+from xmldirector.plonecore.dx.xmlimage_field import XMLImage
+from xmldirector.plonecore.dx.xmltext_field import XMLText
 from xmldirector.plonecore.dx.xpath_field import XMLXPath
 
 from Products.Five.browser import BrowserView

@@ -6,7 +6,7 @@
 
 from Products.Five.browser import BrowserView
 from xmldirector.plonecore.dx.xpath_field import get_all_fields
-from xmldirector.plonecore.dx.xml_field import XMLText
+from xmldirector.plonecore.dx.xmltext_field import XMLText
 
 class Validation(BrowserView):
 
@@ -21,7 +21,7 @@ class Validation(BrowserView):
         """ Return validators for dropdown """
         return self.validator_registry.entries()
 
-    def xml_fields(self):
+    def xmltext_fields(self):
         result = list()
         for name, field in get_all_fields(self.context).items():
             if isinstance(field, XMLText):
