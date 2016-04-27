@@ -5,7 +5,7 @@
 
 
 from Products.Five.browser import BrowserView
-from xmldirector.plonecore.dx.xpath_field import get_all_fields
+from xmldirector.plonecore.dx.xmlxpath_field import get_all_fields
 from xmldirector.plonecore.dx.xmltext_field import XMLText
 
 class Validation(BrowserView):

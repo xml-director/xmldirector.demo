@@ -21,7 +21,7 @@ from xmldirector.plonecore.dx import dexterity_base
 from xmldirector.plonecore.dx.xmlbinary_field import XMLBinary
 from xmldirector.plonecore.dx.xmlimage_field import XMLImage
 from xmldirector.plonecore.dx.xmltext_field import XMLText
-from xmldirector.plonecore.dx.xpath_field import XMLXPath
+from xmldirector.plonecore.dx.xmlxpath_field import XMLXPath
 
 
 class IXMLDocument(model.Schema):
