@@ -43,6 +43,17 @@
         class=".bibledocument_view.BibleDocument"
         attribute="asHTML"
     />
+
+
+    <!-- YAFOWIL -->
+
+    <browser:page
+        for="*"
+        name="yafowil"
+        permission="zope2.View"
+        class=".yafowil_form.YAFOWIL"
+        template="yafowil_form.pt"
+    />
     
     <!-- MusicXML demo content -->
     <browser:page
