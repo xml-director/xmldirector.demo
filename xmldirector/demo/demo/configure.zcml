@@ -12,6 +12,7 @@
 
     <!-- XMLDocument demo content -->
     <browser:page
+        layer="xmldirector.demo.interfaces.IBrowserLayer"
         for=".xmldocument.IXMLDocument"
         name="xmldocument_view"
         permission="zope2.View"
@@ -20,6 +21,7 @@
     />
 
     <browser:page
+        layer="xmldirector.demo.interfaces.IBrowserLayer"
         for=".xmldocument.IXMLDocument"
         name="asHTML"
         permission="zope2.View"
@@ -29,6 +31,7 @@
 
     <!-- BibleDocument demo content -->
     <browser:page
+        layer="xmldirector.demo.interfaces.IBrowserLayer"
         for=".bibledocument.IBibleDocument"
         name="bibledocument_view"
         permission="zope2.View"
@@ -37,6 +40,7 @@
     />
 
     <browser:page
+        layer="xmldirector.demo.interfaces.IBrowserLayer"
         for=".bibledocument.IBibleDocument"
         name="asHTML"
         permission="zope2.View"
@@ -48,6 +52,7 @@
     <!-- YAFOWIL -->
 
     <browser:page
+        layer="xmldirector.demo.interfaces.IBrowserLayer"
         for="*"
         name="yafowil"
         permission="zope2.View"
@@ -57,6 +62,7 @@
     
     <!-- MusicXML demo content -->
     <browser:page
+        layer="xmldirector.demo.interfaces.IBrowserLayer"
         for=".musicxml.MusicXML"
         name="musicxml_render"
         permission="zope2.View"
@@ -67,6 +73,7 @@
 
     <!-- ModsDocument demo content -->
     <browser:page
+        layer="xmldirector.demo.interfaces.IBrowserLayer"
         for=".modsdocument.IMODSDocument"
         name="modsdocument_view"
         permission="zope2.View"
@@ -75,6 +82,7 @@
     />
 
     <browser:page
+        layer="xmldirector.demo.interfaces.IBrowserLayer"
         for=".modsdocument.IMODSDocument"
         name="asHTML"
         permission="zope2.View"
@@ -83,7 +91,8 @@
     />
 
     <browser:resourceDirectory
-        name="xmldirector.demo"
+        layer="xmldirector.demo.interfaces.IBrowserLayer"
+        name="xmldirector.demo.interfaces.IBrowserLayer"
         directory="resources"
     />
 
@@ -104,6 +113,7 @@
 
     <!-- generic validation form -->
     <browser:page
+        layer="xmldirector.demo.interfaces.IBrowserLayer"
         for="*"
         name="validation"
         template="validation.pt"
@@ -112,6 +122,7 @@
     />
 
     <browser:page
+        layer="xmldirector.demo.interfaces.IBrowserLayer"
         for="*"
         name="validation-action"
         class=".validation.Validation"
@@ -122,6 +133,7 @@
     <!-- CREX -->
 
     <browser:page
+        layer="xmldirector.demo.interfaces.IBrowserLayer"
         for="*"
         name="crex-upload-form"
         class=".crex.CREX"
@@ -130,6 +142,7 @@
     />
 
     <browser:page
+        layer="xmldirector.demo.interfaces.IBrowserLayer"
         for="*"
         name="new-connector"
         class=".crex.CREX"
@@ -138,6 +151,7 @@
     />
 
     <browser:page
+        layer="xmldirector.demo.interfaces.IBrowserLayer"
         for="*"
         name="upload_docx"
         class=".crex.CREX"
@@ -146,6 +160,7 @@
     />
 
     <browser:page
+        layer="xmldirector.demo.interfaces.IBrowserLayer"
         for="*"
         name="convert-dghodoc"
         class=".crex.CREX"
@@ -154,6 +169,7 @@
     />
 
     <browser:page
+        layer="xmldirector.demo.interfaces.IBrowserLayer"
         for="*"
         name="convert-dita-single-topic"
         class=".crex.CREX"
@@ -162,6 +178,7 @@
     />
 
     <browser:page
+        layer="xmldirector.demo.interfaces.IBrowserLayer"
         for="*"
         name="convert-dita-split-topic"
         class=".crex.CREX"
@@ -170,6 +187,7 @@
     />
 
     <browser:page
+        layer="xmldirector.demo.interfaces.IBrowserLayer"
         for="*"
         name="convert-bookalope"
         class=".crex.CREX"
@@ -178,12 +196,12 @@
     />
 
     <browser:page
+        layer="xmldirector.demo.interfaces.IBrowserLayer"
         for="*"
         name="convert-cleanup"
         class=".crex.CREX"
         attribute="cleanup"
         permission="cmf.ModifyPortalContent"
     />
-
 
 </configure>

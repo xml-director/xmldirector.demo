@@ -1,0 +1,4 @@
+<layers>
+    <layer name="xmldirector.demo"
+        interface="xmldirector.demo.interfaces.IBrowserLayer" />
+</layers>

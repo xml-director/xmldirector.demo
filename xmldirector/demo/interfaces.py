@@ -9,5 +9,4 @@ from zope.interface import Interface
 
 
 class IBrowserLayer(Interface):
-
     """A brower layer specific to my product """
