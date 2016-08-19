@@ -102,7 +102,7 @@
 
     <browser:resourceDirectory
         layer="xmldirector.demo.interfaces.IBrowserLayer"
-        name="xmldirector.demo.interfaces.IBrowserLayer"
+        name="xmldirector.demo"
         directory="resources"
     />
 

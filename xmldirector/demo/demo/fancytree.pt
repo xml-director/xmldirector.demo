@@ -5,21 +5,53 @@
       lang="en"
       metal:use-macro="context/main_template/macros/master"
       i18n:domain="xmldirector.plonecore">
-<body>
+      <body>
+
+
+<metal:javascript fill-slot="javascript_head_slot">
+  <script>
+      require = undefined;
+      define = undefined;
+  </script>
+  <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js" type="text/javascript"></script>
+  <script src="++resource++xmldirector.demo/fancytree/dist/jquery.fancytree-all.js" type="text/javascript"></script>
+
+</metal:javascript>
 
 <metal:main fill-slot="content-core">
     <metal:content-core define-macro="content-core">
+        <link rel="stylesheet" type="text/css" href="++resource++xmldirector.demo/fancytree/dist/skin-xp/ui.fancytree.css" />
 
-        <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js" type="text/javascript"></script>
         <h1>Fancytree demo</h1>
 
-        <div id="tree">...</div>
+        <div id="tree1" class="tree" style="float: left; width: 40%">
+          <ul id="treeData" style="display: none;">
+            <li id="1">Node 1
+            <li id="2" class="folder">Folder 2
+              <ul>
+                <li id="3">Node 2.1
+                <li id="4">Node 2.2
+              </ul>
+          </ul>
+        </div>
 
+        <div id="tree2" class="tree" style="float: left; width: 40%">
+          <ul id="treeData2" style="display: none;">
+            <li id="2-1">Node 1
+            <li id="2-2" class="folder">Folder 2
+              <ul>
+                <li id="2-3">Node 2.1
+                <li id="2-4">Node 2.2
+              </ul>
+          </ul>
+        </div>
+
+        <div style="clear: both"></div>
 
       <script type="text/javascript">
         $(function(){
           // Create the tree inside the <div id="tree"> element.
-          $("#tree").fancytree({ 
+          $(".tree").fancytree({ 
             });
         });
       </script>       
