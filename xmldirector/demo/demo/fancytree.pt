@@ -35,7 +35,7 @@
             <div id="tree1" class="tree" >
               <ul id="treeData" style="display: none;">
                 <li class="src-node" id="1">Node 1
-                <li class="src-node" id="2" class="folder">Folder 2
+                <li class="src-node folder" id="2">Folder 2
                   <ul>
                     <li class="src-node" id="3">Node 2.1
                     <li class="src-node" id="4">Node 2.2
@@ -49,7 +49,7 @@
             <div id="tree2" class="tree">
               <ul id="treeData2" style="display: none;">
                 <li class="target-node" id="2-1">Node 1
-                <li class="target-node" id="2-2" class="folder">Folder 2
+                <li class="target-node folder" id="2-2">Folder 2
                   <ul>
                     <li class="target-node" id="2-3">Node 2.1
                     <li class="target-node" id="2-4">Node 2.2
