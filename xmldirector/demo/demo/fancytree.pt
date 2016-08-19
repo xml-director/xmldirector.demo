@@ -18,7 +18,7 @@
     <script type="text/javascript" tal:attributes="src string:$fbase/3rd-party/extensions/contextmenu/js/jquery.fancytree.contextMenu.js"></script>
     <link rel="stylesheet" 
           type="text/css" 
-          tal:attributes="href string:$fbase/dist/skin-xp/ui.fancytree.css" />
+          tal:attributes="href string:$fbase/dist/skin-lion/ui.fancytree.css" />
     <link rel="stylesheet" 
           type="text/css" 
           tal:attributes="href string:$fbase/3rd-party/extensions/contextmenu/css/jquery.contextMenu.css"/>
@@ -27,8 +27,6 @@
 <metal:main fill-slot="content-core">
     <metal:content-core define-macro="content-core">
         <h1>Fancytree demo</h1>
-
-
 
         <div style="float: left; width: 40%">
             <h2>Content repository</h2>
@@ -66,7 +64,8 @@
             var node = $.ui.fancytree.getNode(data.$trigger);
             var title = node.title;
             var new_title = prompt('Rename', title);
-            node.setTitle(new_title);
+            if (new_title != null) 
+                node.setTitle(new_title);
         }
 
         function menu_delete(action, data) {
@@ -77,7 +76,8 @@
         function menu_add_folder(action, data) {
             var node = $.ui.fancytree.getNode(data.$trigger);
             var title = prompt('Folder name', '');
-            node.addChildren({title: title, folder: true});
+            if (title != null) 
+                node.addChildren({title: title, folder: true});
         }
 
         function menu_add_item(action, data) {
@@ -128,13 +128,15 @@
                   },
                   dragDrop: function(node, data) {
                     var new_node = null;
-                    if (data.otherNode.extraClasses.indexOf('src-node') != -1 ) {
+                    var extraClasses = data.otherNode.extraClasses || '';
+                    if (extraClasses.indexOf('src-node') != -1 ) {
                         new_node = data.otherNode.copyTo(node, data.hitMode);
                         new_node.removeClass('src-node');
                         new_node.addClass('target-node');
                     } else {
                         new_node = data.otherNode.moveTo(node, data.hitMode);
                     }
+                    node.setExpanded(node);
                   }
               },
          
