@@ -59,6 +59,16 @@
         class=".yafowil_form.YAFOWIL"
         template="yafowil_form.pt"
     />
+
+    <!-- fancytree -->
+
+    <browser:page
+        layer="xmldirector.demo.interfaces.IBrowserLayer"
+        for="*"
+        name="fancytree"
+        permission="zope2.View"
+        template="fancytree.pt"
+    />
     
     <!-- MusicXML demo content -->
     <browser:page
