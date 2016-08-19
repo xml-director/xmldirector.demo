@@ -28,26 +28,34 @@
     <metal:content-core define-macro="content-core">
         <h1>Fancytree demo</h1>
 
-        <div id="tree1" class="tree" style="float: left; width: 40%">
-          <ul id="treeData" style="display: none;">
-            <li id="1">Node 1
-            <li id="2" class="folder">Folder 2
-              <ul>
-                <li id="3">Node 2.1
-                <li id="4">Node 2.2
+
+
+        <div style="float: left; width: 40%">
+            <h2>Content repository</h2>
+            <div id="tree1" class="tree" >
+              <ul id="treeData" style="display: none;">
+                <li class="src-node" id="1">Node 1
+                <li class="src-node" id="2" class="folder">Folder 2
+                  <ul>
+                    <li class="src-node" id="3">Node 2.1
+                    <li class="src-node" id="4">Node 2.2
+                  </ul>
               </ul>
-          </ul>
+            </div>
         </div>
 
-        <div id="tree2" class="tree" style="float: left; width: 40%">
-          <ul id="treeData2" style="display: none;">
-            <li id="2-1">Node 1
-            <li id="2-2" class="folder">Folder 2
-              <ul>
-                <li id="2-3">Node 2.1
-                <li id="2-4">Node 2.2
+        <div style="float: left; width: 40%">
+            <h2>Map</h2>
+            <div id="tree2" class="tree">
+              <ul id="treeData2" style="display: none;">
+                <li class="target-node" id="2-1">Node 1
+                <li class="target-node" id="2-2" class="folder">Folder 2
+                  <ul>
+                    <li class="target-node" id="2-3">Node 2.1
+                    <li class="target-node" id="2-4">Node 2.2
+                  </ul>
               </ul>
-          </ul>
+            </div>
         </div>
 
         <div style="clear: both"></div>
@@ -119,7 +127,14 @@
                      return true;
                   },
                   dragDrop: function(node, data) {
-                    data.otherNode.moveTo(node, data.hitMode);
+                    var new_node = null;
+                    if (data.otherNode.extraClasses.indexOf('src-node') != -1 ) {
+                        new_node = data.otherNode.copyTo(node, data.hitMode);
+                        new_node.removeClass('src-node');
+                        new_node.addClass('target-node');
+                    } else {
+                        new_node = data.otherNode.moveTo(node, data.hitMode);
+                    }
                   }
               },
          
