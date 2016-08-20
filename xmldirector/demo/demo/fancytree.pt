@@ -108,6 +108,7 @@
                     return true;
                   },
                   dragEnter: function(node, data) {
+                    
                     /** data.otherNode may be null for non-fancytree droppables.
                      *  Return false to disallow dropping on node. In this case
                      *  dragOver and dragLeave are not called.
@@ -126,17 +127,23 @@
                     */
                      return true;
                   },
-                  dragDrop: function(node, data) {
+                  dragDrop: function(target_node, data) {
                     var new_node = null;
-                    var extraClasses = data.otherNode.extraClasses || '';
-                    if (extraClasses.indexOf('src-node') != -1 ) {
-                        new_node = data.otherNode.copyTo(node, data.hitMode);
+                    var source_node = data.otherNode;
+                    var source_class = (source_node.extraClasses || '').indexOf('src-node') > -1 ? 'src' : 'target';
+                    var target_class = (target_node.extraClasses || '').indexOf('src-node') > -1 ? 'src' : 'target';
+                    if (source_class == 'src' && target_class == 'target') {
+                        new_node = data.otherNode.copyTo(target_node, data.hitMode);
                         new_node.removeClass('src-node');
                         new_node.addClass('target-node');
+                        target_node.setExpanded(true);
+                    } else if (source_class == 'target' && target_class == 'target') {
+                        new_node = data.otherNode.moveTo(target_node, data.hitMode);
+                        target_node.setExpanded(true);
                     } else {
-                        new_node = data.otherNode.moveTo(node, data.hitMode);
+                        alert('Can not move nodes from target to source');
+                        return false;
                     }
-                    node.setExpanded(node);
                   }
               },
          
