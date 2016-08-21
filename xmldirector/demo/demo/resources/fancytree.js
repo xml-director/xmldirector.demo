@@ -56,6 +56,11 @@ function expand_tree(selector) {
     });
 }
 
+function message(text) {
+    $('#message').html(text).show().fadeOut(5000);
+}
+
+
 var dnd = {
     draggable: {
         scroll: false
@@ -101,6 +106,10 @@ var dnd = {
         var source_node = data.otherNode;
         var source_class = (source_node.extraClasses || '').indexOf('src-node') > -1 ? 'src' : 'target';
         var target_class = (target_node.extraClasses || '').indexOf('src-node') > -1 ? 'src' : 'target';
+        if (data.hitMode == 'over' && !target_node.folder) {
+            message('Nodes can only be dropped on folders');
+            return false;
+        }
         if (source_class == 'src' && target_class == 'target') {
             new_node = data.otherNode.copyTo(target_node, data.hitMode);
             new_node.removeClass('src-node');
@@ -108,9 +117,6 @@ var dnd = {
             target_node.setExpanded(true);
         } else if (source_class == 'target' && target_class == 'target') {
             /* DnD 'over' only on folder nodes */
-            if (data.hitMode == 'over' && !target_node.folder) {
-                return false;
-            }
             new_node = data.otherNode.moveTo(target_node, data.hitMode);
             target_node.setExpanded(true);
         } else {
