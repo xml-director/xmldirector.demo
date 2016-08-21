@@ -13,15 +13,25 @@
         define = undefined;
     </script>
     <script type="text/javascript" src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.ui-contextmenu/1.8.2/jquery.ui-contextmenu.min.js"></script>
     <script type="text/javascript" tal:attributes="src string:$fbase/dist/jquery.fancytree-all.js"></script>
-    <script type="text/javascript" tal:attributes="src string:$fbase/3rd-party/extensions/contextmenu/js/jquery.contextMenu-1.6.5.js"></script>
-    <script type="text/javascript" tal:attributes="src string:$fbase/3rd-party/extensions/contextmenu/js/jquery.fancytree.contextMenu.js"></script>
+   
+
+    <link type="text/css" 
+          rel="stylesheet" 
+          href="https://code.jquery.com/ui/1.11.1/themes/start/jquery-ui.css" />
     <link rel="stylesheet" 
           type="text/css" 
           tal:attributes="href string:$fbase/dist/skin-lion/ui.fancytree.css" />
-    <link rel="stylesheet" 
-          type="text/css" 
-          tal:attributes="href string:$fbase/3rd-party/extensions/contextmenu/css/jquery.contextMenu.css"/>
+
+
+    <style type="text/css">
+      .ui-menu {
+        width: 100px;
+        font-size: 63%;
+        z-index: 3; /* over ext-wide titles */
+      }
+    </style>
 </metal:javascript>
 
 <metal:main fill-slot="content-core">
@@ -69,28 +79,29 @@
 
       <script type="text/javascript">
 
-        function menu_rename(action, data) {
-            var node = $.ui.fancytree.getNode(data.$trigger);
+        function menu_rename(event, ui) {
+
+            var node = $.ui.fancytree.getNode(ui.target);
             var title = node.title;
             var new_title = prompt('Rename', title);
             if (new_title != null) 
                 node.setTitle(new_title);
         }
 
-        function menu_delete(action, data) {
-            var node = $.ui.fancytree.getNode(data.$trigger);
+        function menu_delete(event, ui) {
+            var node = $.ui.fancytree.getNode(ui.target);
             node.remove();
         }
 
-        function menu_add_folder(action, data) {
-            var node = $.ui.fancytree.getNode(data.$trigger);
+        function menu_add_folder(event, ui) {
+            var node = $.ui.fancytree.getNode(ui.target);
             var title = prompt('Folder name', '');
             if (title != null) 
                 node.addChildren({title: title, folder: true});
         }
 
-        function menu_add_item(action, data) {
-            var node = $.ui.fancytree.getNode(data.$trigger);
+        function menu_add_item(event, ui) {
+            var node = $.ui.fancytree.getNode(ui.target);
             var title = prompt('Item name', '');
             node.addChildren({title: title, folder: false});
         }
@@ -170,7 +181,7 @@
           }
         }
 
-        $(function(){
+        $(document).ready(function(){
 
             $("#tree1").fancytree({ 
               extensions: ["dnd"],
@@ -178,17 +189,23 @@
             });
             
             $("#tree2").fancytree({ 
-              extensions: ["dnd", "edit", "contextMenu"],
-              dnd: dnd,
-              contextMenu: {
-                  menu: {
-                      'Rename': { 'name': 'Rename', 'icon': 'edit', callback: menu_rename },
-                      'Remove': { 'name': 'Delete', 'icon': 'delete', callback: menu_delete },
-                      'Add Folder': { 'name': 'Add Folder', 'icon': 'add', callback: menu_add_folder},
-                      'Add item': { 'name': 'Add item', 'icon': 'add', callback: menu_add_item},
-                  },
-              }
+              extensions: ["dnd", "edit"],
+              dnd: dnd
           });
+
+         $("#tree2").contextmenu({
+              delegate: "span.fancytree-title",
+              menu: [
+                  {title: "Rename", cmd: "cut", uiIcon: "ui-icon-scissors", action: menu_rename},
+                  {title: "Delete", cmd: "delete", uiIcon: "ui-icon-scissors", action: menu_delete},
+                  {title: "Add item", cmd: "Add item", uiIcon: "ui-icon-scissors", action: menu_add_item},
+                  {title: "Add folder", cmd: "Add folder", uiIcon: "ui-icon-scissors", action: menu_add_folder},
+                  ],
+              beforeOpen: function(event, ui) {
+                var node = $.ui.fancytree.getNode(ui.target);
+              },
+          });
+
 
         });
       </script>       
