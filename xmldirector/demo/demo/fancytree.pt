@@ -196,10 +196,10 @@
          $("#tree2").contextmenu({
               delegate: "span.fancytree-title",
               menu: [
-                  {title: "Rename", cmd: "cut", uiIcon: "ui-icon-scissors", action: menu_rename},
-                  {title: "Delete", cmd: "delete", uiIcon: "ui-icon-scissors", action: menu_delete},
-                  {title: "Add item", cmd: "Add item", uiIcon: "ui-icon-scissors", action: menu_add_item},
-                  {title: "Add folder", cmd: "Add folder", uiIcon: "ui-icon-scissors", action: menu_add_folder},
+                  {title: "Rename", cmd: "cut", uiIcon: "ui-icon-pencil", action: menu_rename},
+                  {title: "Delete", cmd: "delete", uiIcon: "ui-icon-trash", action: menu_delete},
+                  {title: "Add item", cmd: "Add item", uiIcon: "ui-icon-document", action: menu_add_item},
+                  {title: "Add folder", cmd: "Add folder", uiIcon: "ui-icon-folder-collapsed", action: menu_add_folder},
                   ],
               beforeOpen: function(event, ui) {
                 var node = $.ui.fancytree.getNode(ui.target);
