@@ -32,11 +32,18 @@
             <h2>Content repository</h2>
             <div id="tree1" class="tree" >
               <ul id="treeData" style="display: none;">
-                <li class="src-node" id="1">Node 1
-                <li class="src-node folder" id="2">Folder 2
+                <li class="src-node" id="doc-1">Document 1
+                <li class="src-node" id="doc-2">Document 2
+                <li class="src-node" id="doc-3">Document 3
+                <li class="src-node folder" id="aaa">Topics AAA
                   <ul>
-                    <li class="src-node" id="3">Node 2.1
-                    <li class="src-node" id="4">Node 2.2
+                    <li class="src-node" id="a1">Topic A1
+                    <li class="src-node" id="a2">Topic A2
+                  </ul>
+                <li class="src-node folder" id="bbb">Topics BBB
+                  <ul>
+                    <li class="src-node" id="b1">Topic B1
+                    <li class="src-node" id="b2">Topic B2
                   </ul>
               </ul>
             </div>
@@ -86,6 +93,17 @@
             node.addChildren({title: title, folder: false});
         }
 
+        function is_src_node(node) {
+            return (node.extraClasses || '').indexOf('src-node') > -1;
+        }
+
+
+        function set_target_class(node) {
+            node.visit(function(n) {
+                n.addClass('target-node');             
+            });
+        }
+
         $(function(){
         
             $(".tree").fancytree({ 
@@ -100,6 +118,9 @@
               },
 
               dnd: {
+                  draggable: {
+                    scroll: false
+                  },
                   autoExpandMS: 400,
                   focusOnClick: true,
                   preventVoidMoves: true, // Prevent dropping nodes 'before self', etc.
@@ -107,8 +128,17 @@
                   dragStart: function(node, data) {
                     return true;
                   },
+
                   dragEnter: function(node, data) {
-                    
+                      return true;
+                  },
+                  dragOver: function(node, data) {
+
+                      /* No DnD within the src tree */
+                      if (is_src_node(node) && is_src_node(data.otherNode)) {
+                          return false;
+                      }
+
                     /** data.otherNode may be null for non-fancytree droppables.
                      *  Return false to disallow dropping on node. In this case
                      *  dragOver and dragLeave are not called.
@@ -135,9 +165,13 @@
                     if (source_class == 'src' && target_class == 'target') {
                         new_node = data.otherNode.copyTo(target_node, data.hitMode);
                         new_node.removeClass('src-node');
-                        new_node.addClass('target-node');
+                        set_target_class(data.otherNode);
                         target_node.setExpanded(true);
                     } else if (source_class == 'target' && target_class == 'target') {
+                        /* DnD 'over' only on folder nodes */
+                        if (data.hitMode == 'over' && !target_node.folder) {
+                            return false;
+                        }
                         new_node = data.otherNode.moveTo(target_node, data.hitMode);
                         target_node.setExpanded(true);
                     } else {
