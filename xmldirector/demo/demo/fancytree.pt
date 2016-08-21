@@ -30,8 +30,8 @@
 
         <div style="float: left; width: 40%">
             <h2>Content repository</h2>
-            <div id="tree1" class="tree" >
-              <ul id="treeData" style="display: none;">
+            <div id="tree1">
+              <ul id="treeData1" style="display: none;">
                 <li class="src-node" id="doc-1">Document 1
                 <li class="src-node" id="doc-2">Document 2
                 <li class="src-node" id="doc-3">Document 3
@@ -51,7 +51,7 @@
 
         <div style="float: left; width: 40%">
             <h2>Map</h2>
-            <div id="tree2" class="tree">
+            <div id="tree2">
               <ul id="treeData2" style="display: none;">
                 <li class="target-node" id="2-1">Node 1
                 <li class="target-node folder" id="2-2">Folder 2
@@ -104,10 +104,80 @@
             });
         }
 
+        var dnd = {
+          draggable: {
+            scroll: false
+          },
+          autoExpandMS: 400,
+          focusOnClick: true,
+          preventVoidMoves: true, // Prevent dropping nodes 'before self', etc.
+          preventRecursiveMoves: true, // Prevent dropping nodes on own descendants
+          dragStart: function(node, data) {
+            return true;
+          },
+
+          dragEnter: function(node, data) {
+              return true;
+          },
+          dragOver: function(node, data) {
+
+              /* No DnD within the src tree */
+              if (is_src_node(node) && is_src_node(data.otherNode)) {
+                  return false;
+              }
+
+            /** data.otherNode may be null for non-fancytree droppables.
+             *  Return false to disallow dropping on node. In this case
+             *  dragOver and dragLeave are not called.
+             *  Return 'over', 'before, or 'after' to force a hitMode.
+             *  Return ['before', 'after'] to restrict available hitModes.
+             *  Any other return value will calc the hitMode from the cursor position.
+             */
+            // Prevent dropping a parent below another parent (only sort
+            // nodes under the same parent)
+            /*         
+                if(node.parent !== data.otherNode.parent){
+                    return false;
+                }
+                // Don't allow dropping *over* a node (would create a child)
+                return ["before", "after"];
+            */
+             return true;
+          },
+          dragDrop: function(target_node, data) {
+            var new_node = null;
+            var source_node = data.otherNode;
+            var source_class = (source_node.extraClasses || '').indexOf('src-node') > -1 ? 'src' : 'target';
+            var target_class = (target_node.extraClasses || '').indexOf('src-node') > -1 ? 'src' : 'target';
+            if (source_class == 'src' && target_class == 'target') {
+                new_node = data.otherNode.copyTo(target_node, data.hitMode);
+                new_node.removeClass('src-node');
+                set_target_class(data.otherNode);
+                target_node.setExpanded(true);
+            } else if (source_class == 'target' && target_class == 'target') {
+                /* DnD 'over' only on folder nodes */
+                if (data.hitMode == 'over' && !target_node.folder) {
+                    return false;
+                }
+                new_node = data.otherNode.moveTo(target_node, data.hitMode);
+                target_node.setExpanded(true);
+            } else {
+                alert('Can not move nodes from target to source');
+                return false;
+            }
+          }
+        }
+
         $(function(){
-        
-            $(".tree").fancytree({ 
+
+            $("#tree1").fancytree({ 
+              extensions: ["dnd"],
+              dnd: dnd
+            });
+            
+            $("#tree2").fancytree({ 
               extensions: ["dnd", "edit", "contextMenu"],
+              dnd: dnd,
               contextMenu: {
                   menu: {
                       'Rename': { 'name': 'Rename', 'icon': 'edit', callback: menu_rename },
@@ -115,73 +185,9 @@
                       'Add Folder': { 'name': 'Add Folder', 'icon': 'add', callback: menu_add_folder},
                       'Add item': { 'name': 'Add item', 'icon': 'add', callback: menu_add_item},
                   },
-              },
+              }
+          });
 
-              dnd: {
-                  draggable: {
-                    scroll: false
-                  },
-                  autoExpandMS: 400,
-                  focusOnClick: true,
-                  preventVoidMoves: true, // Prevent dropping nodes 'before self', etc.
-                  preventRecursiveMoves: true, // Prevent dropping nodes on own descendants
-                  dragStart: function(node, data) {
-                    return true;
-                  },
-
-                  dragEnter: function(node, data) {
-                      return true;
-                  },
-                  dragOver: function(node, data) {
-
-                      /* No DnD within the src tree */
-                      if (is_src_node(node) && is_src_node(data.otherNode)) {
-                          return false;
-                      }
-
-                    /** data.otherNode may be null for non-fancytree droppables.
-                     *  Return false to disallow dropping on node. In this case
-                     *  dragOver and dragLeave are not called.
-                     *  Return 'over', 'before, or 'after' to force a hitMode.
-                     *  Return ['before', 'after'] to restrict available hitModes.
-                     *  Any other return value will calc the hitMode from the cursor position.
-                     */
-                    // Prevent dropping a parent below another parent (only sort
-                    // nodes under the same parent)
-                    /*         
-                        if(node.parent !== data.otherNode.parent){
-                            return false;
-                        }
-                        // Don't allow dropping *over* a node (would create a child)
-                        return ["before", "after"];
-                    */
-                     return true;
-                  },
-                  dragDrop: function(target_node, data) {
-                    var new_node = null;
-                    var source_node = data.otherNode;
-                    var source_class = (source_node.extraClasses || '').indexOf('src-node') > -1 ? 'src' : 'target';
-                    var target_class = (target_node.extraClasses || '').indexOf('src-node') > -1 ? 'src' : 'target';
-                    if (source_class == 'src' && target_class == 'target') {
-                        new_node = data.otherNode.copyTo(target_node, data.hitMode);
-                        new_node.removeClass('src-node');
-                        set_target_class(data.otherNode);
-                        target_node.setExpanded(true);
-                    } else if (source_class == 'target' && target_class == 'target') {
-                        /* DnD 'over' only on folder nodes */
-                        if (data.hitMode == 'over' && !target_node.folder) {
-                            return false;
-                        }
-                        new_node = data.otherNode.moveTo(target_node, data.hitMode);
-                        target_node.setExpanded(true);
-                    } else {
-                        alert('Can not move nodes from target to source');
-                        return false;
-                    }
-                  }
-              },
-         
-            });
         });
       </script>       
   </metal:content-core>
