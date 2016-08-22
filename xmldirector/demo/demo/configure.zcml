@@ -69,6 +69,16 @@
         permission="zope2.View"
         template="fancytree.pt"
     />
+
+    <browser:page
+        layer="xmldirector.demo.interfaces.IBrowserLayer"
+        for="xmldirector.plonecore.connector.IConnector"
+        name="get_tree_data"
+        permission="zope2.View"
+        class=".fancytree.Fancytree"
+        attribute="get_tree_data"
+    />
+    
     
     <!-- MusicXML demo content -->
     <browser:page

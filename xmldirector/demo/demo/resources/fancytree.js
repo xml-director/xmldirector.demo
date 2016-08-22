@@ -130,7 +130,15 @@ $(document).ready(function() {
 
     $("#tree1").fancytree({
         extensions: ["dnd"],
-        dnd: dnd
+        dnd: dnd,
+        lazyLoad: function(event, data){
+            var node = data.node;
+            data.result = {
+                url: CONNECTOR_URL + "/get_tree_data",
+                data: {mode: "children", path: node.data.path},
+                cache: false
+            };
+        },
     });
 
     $("#tree2").fancytree({
