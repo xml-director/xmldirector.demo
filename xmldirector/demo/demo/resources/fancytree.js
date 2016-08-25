@@ -21,6 +21,10 @@ function menu_delete(event, ui) {
 
 function menu_add_folder(event, ui) {
     var node = $.ui.fancytree.getNode(ui.target);
+    if (! node.isFolder()) {
+        message('You can not add a folder on a document node');
+        return;
+    }
     var title = prompt('Folder name', '');
     if (title != null)
         node.addChildren({
@@ -105,14 +109,19 @@ var dnd = {
     dragDrop: function(target_node, data) {
         var new_node = null;
         var source_node = data.otherNode;
+
         var source_class = (source_node.extraClasses || '').indexOf('src-node') > -1 ? 'src' : 'target';
         var target_class = (target_node.extraClasses || '').indexOf('src-node') > -1 ? 'src' : 'target';
-        console.log(source_class);
-        console.log(target_class);
         if (data.hitMode == 'over' && !target_node.folder) {
             message('Nodes can only be dropped on folders');
             return false;
         }
+
+        if (source_class == 'src' && source_node.isFolder()) {
+            message('You can not drag & drop folders but only documents');
+            return false;
+        }
+
         if (source_class == 'src' && target_class == 'target') {
             new_node = data.otherNode.copyTo(target_node, data.hitMode);
             new_node.removeClass('src-node');
@@ -182,5 +191,33 @@ $(document).ready(function() {
 
     expand_tree('#tree1');
     expand_tree('#tree2');
+
+
+    $('#load').on('click', function() {
+        var tree = $("#tree2").fancytree("getTree");
+        $.getJSON(
+            CONNECTOR_URL + '/@@load-tree',
+            function(data) {
+                console.log(data);
+                tree.clear();
+                tree.rootNode.fromDict(data);
+            }
+        );
+    });
+
+    $('#save').on('click', function() {
+        var tree = $("#tree2").fancytree("getTree");
+        var d = tree.toDict(true);
+        $.ajax({
+            type: 'POST',
+            url: CONNECTOR_URL + '/@@save-tree',
+            data: JSON.stringify(d),
+            contentType: 'application/json',
+            processData: false,
+            complete: function() {
+                message('data saved');
+            }
+        });
+    });
 
 });

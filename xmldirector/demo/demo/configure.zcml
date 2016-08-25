@@ -79,6 +79,23 @@
         attribute="get_tree_data"
     />
     
+    <browser:page
+        layer="xmldirector.demo.interfaces.IBrowserLayer"
+        for="xmldirector.plonecore.connector.IConnector"
+        name="save-tree"
+        permission="cmf.ModifyPortalContent"
+        class=".fancytree.Fancytree"
+        attribute="save_tree"
+    />
+
+    <browser:page
+        layer="xmldirector.demo.interfaces.IBrowserLayer"
+        for="xmldirector.plonecore.connector.IConnector"
+        name="load-tree"
+        permission="cmf.ModifyPortalContent"
+        class=".fancytree.Fancytree"
+        attribute="load_tree"
+    />
     
     <!-- MusicXML demo content -->
     <browser:page

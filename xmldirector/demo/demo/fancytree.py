@@ -5,6 +5,19 @@ from Products.Five.browser import BrowserView
 
 class Fancytree(BrowserView):
 
+    def save_tree(self):
+        from zope.interface import alsoProvides
+        from plone.protect.interfaces import IDisableCSRFProtection
+        alsoProvides(self.request, IDisableCSRFProtection)
+
+        data = json.loads(self.request.BODY)
+        self.context._tree = data
+        self.request.response.setStatus(200)
+
+    def load_tree(self):
+        self.request.response.setStatus(200)
+        return json.dumps(self.context._tree)
+
     def get_tree_data(self, path, mode):
         files = []
         dirs = []

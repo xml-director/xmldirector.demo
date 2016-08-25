@@ -52,7 +52,7 @@
             <div style="float: left; width: 10%">&nbsp;</div>
 
             <div style="float: left; width: 40%">
-                <h2>Map</h2>
+                <h2>Publication structure</h2>
                 <div id="tree2" style="max-height: 500px; overflow: auto">
                   <ul id="treeData2" style="display: none;">
                       <li class="target-node root folder" id="2-root">Root
@@ -67,6 +67,8 @@
                       </li>
                   </ul>
                 </div>
+                <button id="save">Save</button>
+                <button id="load">Load</button>
             </div>
         </div>
         <div style="clear: both"></div>
