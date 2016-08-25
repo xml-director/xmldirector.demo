@@ -3,10 +3,13 @@ import json
 
 import plone.api
 from zope.annotation import IAnnotations
+from zope.interface import alsoProvides
+from plone.protect.interfaces import IDisableCSRFProtection
 from Products.Five.browser import BrowserView
 
 
 KEY = 'xmldirector-content-tree'
+
 
 class Publication(BrowserView):
 
@@ -20,8 +23,6 @@ class Publication(BrowserView):
         return anno
 
     def save_tree(self, name='tree'):
-        from zope.interface import alsoProvides
-        from plone.protect.interfaces import IDisableCSRFProtection
         alsoProvides(self.request, IDisableCSRFProtection)
 
         if not name:
@@ -31,8 +32,20 @@ class Publication(BrowserView):
         anno[name] = data
         self.request.response.setStatus(200)
 
+    def connector(self):
+        catalog = plone.api.portal.get_tool('portal_catalog')
+        if not self.context.connectors:
+            return None
+        uid = self.context.connectors[0]
+        brains = catalog(UID=uid)
+        if not brains:
+            return None
+        return brains[0].getObject()
+
     def connector_url(self):
         catalog = plone.api.portal.get_tool('portal_catalog')
+        if not self.context.connectors:
+            raise ValueError('No connector configured')
         uid = self.context.connectors[0]
         brains = catalog(UID=uid)
         if not brains:
@@ -50,6 +63,8 @@ class Publication(BrowserView):
     def get_tree_data(self, path, mode):
 
         catalog = plone.api.portal.get_tool('portal_catalog')
+        if not self.context.connectors:
+            raise ValueError('No connector configured')
         uid = self.context.connectors[0]
         brains = catalog(UID=uid)
         if not brains:
@@ -86,6 +101,4 @@ class Publication(BrowserView):
 
         dirs = sorted(dirs, key=lambda d: d['title'])
         files = sorted(files, key=lambda d: d['title'])
-
         return json.dumps(dirs + files)
-
