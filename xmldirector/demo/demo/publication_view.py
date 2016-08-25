@@ -1,13 +1,14 @@
 
 import json
 
+import plone.api
 from zope.annotation import IAnnotations
 from Products.Five.browser import BrowserView
 
 
 KEY = 'xmldirector-content-tree'
 
-class Fancytree(BrowserView):
+class Publication(BrowserView):
 
     @property
     def annotation(self):
@@ -30,6 +31,15 @@ class Fancytree(BrowserView):
         anno[name] = data
         self.request.response.setStatus(200)
 
+    def connector_url(self):
+        catalog = plone.api.portal.get_tool('portal_catalog')
+        uid = self.context.connectors[0]
+        brains = catalog(UID=uid)
+        if not brains:
+            raise ValueError('No connector found')
+        connector = brains[0].getObject()
+        return connector.absolute_url()
+
     def load_tree(self, name='tree'):
         anno = self.annotation
         if not name in anno:
@@ -38,9 +48,18 @@ class Fancytree(BrowserView):
         return json.dumps(anno[name])
 
     def get_tree_data(self, path, mode):
-        files = []
+
+        catalog = plone.api.portal.get_tool('portal_catalog')
+        uid = self.context.connectors[0]
+        brains = catalog(UID=uid)
+        if not brains:
+            raise ValueError('No connector found')
+        connector = brains[0].getObject()
+        
         dirs = []
-        handle = self.context.get_handle()
+        files = []
+
+        handle = connector.get_handle()
         for name, info in handle.ilistdirinfo(path, dirs_only=True):
             tooltip = u'{}, {}'.format(
                 path + '/' + name,

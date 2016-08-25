@@ -60,43 +60,53 @@
         template="yafowil_form.pt"
     />
 
-    <!-- fancytree -->
+    <!-- Publication -->
 
     <browser:page
         layer="xmldirector.demo.interfaces.IBrowserLayer"
-        for="*"
-        name="fancytree"
+        for="xmldirector.demo.demo.publication.IPublication"
+        name="publication_view"
         permission="zope2.View"
-        template="fancytree.pt"
+        class=".publication_view.Publication"
+        template="publication_view.pt"
     />
 
     <browser:page
         layer="xmldirector.demo.interfaces.IBrowserLayer"
-        for="xmldirector.plonecore.connector.IConnector"
-        name="get_tree_data"
+        for="xmldirector.demo.demo.publication.IPublication"
+        name="publication-tree"
         permission="zope2.View"
-        class=".fancytree.Fancytree"
+        class=".publication_view.Publication"
+        template="publication_tree.pt"
+    />
+
+    <browser:page
+        layer="xmldirector.demo.interfaces.IBrowserLayer"
+        for="xmldirector.demo.demo.publication.IPublication"
+        name="publication-tree-data"
+        permission="zope2.View"
+        class=".publication_view.Publication"
         attribute="get_tree_data"
     />
     
     <browser:page
         layer="xmldirector.demo.interfaces.IBrowserLayer"
-        for="xmldirector.plonecore.connector.IConnector"
-        name="save-tree"
+        for="xmldirector.demo.demo.publication.IPublication"
+        name="publication-save-tree"
         permission="cmf.ModifyPortalContent"
-        class=".fancytree.Fancytree"
+        class=".publication_view.Publication"
         attribute="save_tree"
     />
 
     <browser:page
         layer="xmldirector.demo.interfaces.IBrowserLayer"
-        for="xmldirector.plonecore.connector.IConnector"
-        name="load-tree"
-        permission="cmf.ModifyPortalContent"
-        class=".fancytree.Fancytree"
+        for="xmldirector.demo.demo.publication.IPublication"
+        name="publication-load-tree"
+        permission="zope2.View"
+        class=".publication_view.Publication"
         attribute="load_tree"
     />
-    
+
     <!-- MusicXML demo content -->
     <browser:page
         layer="xmldirector.demo.interfaces.IBrowserLayer"

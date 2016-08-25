@@ -152,7 +152,7 @@ $(document).ready(function() {
         lazyLoad: function(event, data){
             var node = data.node;
             data.result = {
-                url: CONNECTOR_URL + "/get_tree_data",
+                url: PUBLICATION_URL + "/publication-tree-data",
                 data: {mode: "children", path: node.data.path},
                 cache: false
             };
@@ -199,7 +199,7 @@ $(document).ready(function() {
     $('#load').on('click', function() {
         var tree = $("#tree2").fancytree("getTree");
         $.getJSON(
-            CONNECTOR_URL + '/@@load-tree',
+            PUBLICATION_URL + '/@@publication-load-tree',
             function(data) {
                 tree.clear();
                 tree.rootNode.fromDict(data);
@@ -212,7 +212,7 @@ $(document).ready(function() {
         var d = tree.toDict(true);
         $.ajax({
             type: 'POST',
-            url: CONNECTOR_URL + '/@@save-tree',
+            url: PUBLICATION_URL + '/@@publication-save-tree',
             data: JSON.stringify(d),
             contentType: 'application/json',
             processData: false,

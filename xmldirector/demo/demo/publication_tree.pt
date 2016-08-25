@@ -15,9 +15,9 @@
     <script type="text/javascript" src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.ui-contextmenu/1.8.2/jquery.ui-contextmenu.min.js"></script>
     <script type="text/javascript" tal:attributes="src string:$fbase/dist/jquery.fancytree-all.js"></script>
-    <script type="text/javascript" tal:attributes="src string:$portal_url/++resource++xmldirector.demo/fancytree.js"></script>
+    <script type="text/javascript" tal:attributes="src string:$portal_url/++resource++xmldirector.demo/publication.js"></script>
 
-    <script type="text/javascript" tal:content="string: CONNECTOR_URL = '${context/absolute_url}'"></script>
+    <script type="text/javascript" tal:content="string: PUBLICATION_URL = '${context/absolute_url}'"></script>
    
     <link type="text/css" 
           rel="stylesheet" 
