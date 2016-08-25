@@ -1,5 +1,6 @@
 
 import json
+import pprint
 
 import plone.api
 from zope.annotation import IAnnotations
@@ -30,6 +31,7 @@ class Publication(BrowserView):
         data = json.loads(self.request.BODY)
         anno = self.annotation
         anno[name] = data
+        self.context._p_changed = 1
         self.request.response.setStatus(200)
 
     def connector(self):
@@ -70,6 +72,8 @@ class Publication(BrowserView):
         if not brains:
             raise ValueError('No connector found')
         connector = brains[0].getObject()
+        connector_uid = connector.UID()
+        connector_url = connector.absolute_url(1)
         
         dirs = []
         files = []
@@ -98,6 +102,8 @@ class Publication(BrowserView):
                 tooltip=tooltip,
                 extraClasses="src-node",
                 st_size=info['st_size'],
+                connector_uid=connector_uid,
+                connector_url=connector_url,
                 modified_time=info['modified_time'].isoformat(),
                 key=path + '/' + name,
                 path=path + '/' + name))
@@ -105,3 +111,13 @@ class Publication(BrowserView):
         dirs = sorted(dirs, key=lambda d: d['title'])
         files = sorted(files, key=lambda d: d['title'])
         return json.dumps(dirs + files)
+
+    def available_versions(self):
+        result = []
+        for name in self.annotation:
+            content= self.annotation[name]
+            content = pprint.pformat(content, indent=2)
+            result.append(dict(
+                title=name, 
+                content=content))
+        return result

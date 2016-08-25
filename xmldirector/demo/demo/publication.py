@@ -57,7 +57,6 @@ class Publication(Item):
     implements(IPublication)
 
     def available_connectors(self):
-
         catalog = plone.api.portal.get_tool('portal_catalog')
         for uid in self.connectors:
             yield catalog(UID=uid)[0].getObject()

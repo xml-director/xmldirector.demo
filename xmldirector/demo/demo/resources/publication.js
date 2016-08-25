@@ -127,6 +127,7 @@ var dnd = {
 
         if (source_class == 'src' && target_class == 'target') {
             new_node = data.otherNode.copyTo(target_node, data.hitMode);
+            console.log(data.otherNode);
             new_node.removeClass('src-node');
             set_target_class(data.otherNode);
             target_node.setExpanded(true);
@@ -209,7 +210,16 @@ $(document).ready(function() {
 
     $('#save').on('click', function() {
         var tree = $("#tree2").fancytree("getTree");
-        var d = tree.toDict(true);
+        var d = tree.toDict(
+            true, 
+            function(dict, node) {
+
+                console.log(dict)
+                console.log(node)
+
+            } 
+            
+        );
         $.ajax({
             type: 'POST',
             url: PUBLICATION_URL + '/@@publication-save-tree',
