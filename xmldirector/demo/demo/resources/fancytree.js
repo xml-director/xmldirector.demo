@@ -57,7 +57,8 @@ function expand_tree(selector) {
 }
 
 function message(text) {
-    $('#message').html(text).show().fadeOut(5000);
+    $('#message').html(text);
+    $('#message').dialog();
 }
 
 
@@ -106,6 +107,8 @@ var dnd = {
         var source_node = data.otherNode;
         var source_class = (source_node.extraClasses || '').indexOf('src-node') > -1 ? 'src' : 'target';
         var target_class = (target_node.extraClasses || '').indexOf('src-node') > -1 ? 'src' : 'target';
+        console.log(source_class);
+        console.log(target_class);
         if (data.hitMode == 'over' && !target_node.folder) {
             message('Nodes can only be dropped on folders');
             return false;
@@ -119,8 +122,11 @@ var dnd = {
             /* DnD 'over' only on folder nodes */
             new_node = data.otherNode.moveTo(target_node, data.hitMode);
             target_node.setExpanded(true);
+        } else if (source_class == 'src' && target_class == 'src') {
+            message('Can not move nodes within the source tree');
+            return false;
         } else {
-            alert('Can not move nodes from target to source');
+            message('Can not move nodes from target to source');
             return false;
         }
     }

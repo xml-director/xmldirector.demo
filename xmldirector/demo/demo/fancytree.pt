@@ -39,35 +39,37 @@
     <metal:content-core define-macro="content-core">
         <h1>Fancytree demo</h1>
 
-        <div style="float: left; width: 40%">
-            <h2>Content repository</h2>
-            <div id="tree1">
-              <ul id="treeData1" style="display: none;">
-                <li class="target-node root lazy folder" data-path="/">Root </li>
-              </ul>
-            </div>
-        </div>
-
-        <div style="float: left; width: 40%">
-            <h2>Map</h2>
-            <div id="tree2">
-              <ul id="treeData2" style="display: none;">
-                  <li class="target-node root folder" id="2-root">Root
-                      <ul>
-                        <li class="target-node folder" id="2-2">Folder 2
-                          <ul>
-                              <li class="target-node" id="2-3">Node 2.1</li>
-                              <li class="target-node" id="2-4">Node 2.2</li>
-                          </ul>
-                        </li>
-                      </ul>
-                  </li>
-              </ul>
-            </div>
-        </div>
-
-        <div style="clear: both"></div>
         <div id="message"></div>
+        <div>
+            <div style="float: left; width: 40%">
+                <h2>Content repository</h2>
+                <div id="tree1" style="max-height: 500px; overflow: auto">
+                  <ul id="treeData1" style="display: none;">
+                    <li class="src-node root lazy folder" data-path="/">Root </li>
+                  </ul>
+                </div>
+            </div>
+            <div style="float: left; width: 10%">&nbsp;</div>
+
+            <div style="float: left; width: 40%">
+                <h2>Map</h2>
+                <div id="tree2" style="max-height: 500px; overflow: auto">
+                  <ul id="treeData2" style="display: none;">
+                      <li class="target-node root folder" id="2-root">Root
+                          <ul>
+                            <li class="target-node folder" id="2-2">Folder 2
+                              <ul>
+                                  <li class="target-node" id="2-3">Node 2.1</li>
+                                  <li class="target-node" id="2-4">Node 2.2</li>
+                              </ul>
+                            </li>
+                          </ul>
+                      </li>
+                  </ul>
+                </div>
+            </div>
+        </div>
+        <div style="clear: both"></div>
 
   </metal:content-core>
 </metal:main>
