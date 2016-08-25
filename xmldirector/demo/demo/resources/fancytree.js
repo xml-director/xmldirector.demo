@@ -1,3 +1,6 @@
+LOCAL_STORAGE_KEY = 'xmldirector-tree-structure'
+
+
 function menu_rename(event, ui) {
     var node = $.ui.fancytree.getNode(ui.target);
     if ((node.extraClasses || '').indexOf('root') != -1) {
@@ -198,7 +201,6 @@ $(document).ready(function() {
         $.getJSON(
             CONNECTOR_URL + '/@@load-tree',
             function(data) {
-                console.log(data);
                 tree.clear();
                 tree.rootNode.fromDict(data);
             }
@@ -220,4 +222,23 @@ $(document).ready(function() {
         });
     });
 
+    $('#load-local').on('click', function() {
+        var tree = $("#tree2").fancytree("getTree");
+        var data = $.parseJSON(localStorage.getItem(LOCAL_STORAGE_KEY));
+        tree.clear();
+        tree.rootNode.fromDict(data);
+
+    });
+
+    $('#save-local').on('click', function() {
+        var tree = $("#tree2").fancytree("getTree");
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(tree.toDict(true)));
+        message('data saved');
+    });
+
+    $('#tree-clear').on('click', function() {
+        var tree = $("#tree2").fancytree("getTree");
+        var root = tree.rootNode.children[0];
+        root.removeChildren();
+    });
 });
