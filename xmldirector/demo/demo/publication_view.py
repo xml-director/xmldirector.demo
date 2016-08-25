@@ -84,6 +84,7 @@ class Publication(BrowserView):
                 lazy=True,
                 tooltip=tooltip,
                 extraClasses="src-node",
+                modified_time=info['modified_time'].isoformat(),
                 key=path + '/' + name,
                 path=path + '/' + name))
 
@@ -96,6 +97,8 @@ class Publication(BrowserView):
                 folder=False,
                 tooltip=tooltip,
                 extraClasses="src-node",
+                st_size=info['st_size'],
+                modified_time=info['modified_time'].isoformat(),
                 key=path + '/' + name,
                 path=path + '/' + name))
 
