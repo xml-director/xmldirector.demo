@@ -1,22 +1,41 @@
 
 import json
+
+from zope.annotation import IAnnotations
 from Products.Five.browser import BrowserView
 
 
+KEY = 'xmldirector-content-tree'
+
 class Fancytree(BrowserView):
 
-    def save_tree(self):
+    @property
+    def annotation(self):
+        annotation = IAnnotations(self.context)
+        anno = annotation.get(KEY)
+        if anno is None:
+            annotation[KEY] = dict()
+            return {}
+        return anno
+
+    def save_tree(self, name='tree'):
         from zope.interface import alsoProvides
         from plone.protect.interfaces import IDisableCSRFProtection
         alsoProvides(self.request, IDisableCSRFProtection)
 
+        if not name:
+            name = datetime.utcnow().isoformat()
         data = json.loads(self.request.BODY)
-        self.context._tree = data
+        anno = self.annotation
+        anno[name] = data
         self.request.response.setStatus(200)
 
-    def load_tree(self):
-        self.request.response.setStatus(200)
-        return json.dumps(self.context._tree)
+    def load_tree(self, name='tree'):
+        anno = self.annotation
+        if not name in anno:
+            self.request.response.setStatus(404)
+            return 'Key "{}" not found in tree'.format(name)
+        return json.dumps(anno[name])
 
     def get_tree_data(self, path, mode):
         files = []
