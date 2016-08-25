@@ -42,16 +42,25 @@ class Fancytree(BrowserView):
         dirs = []
         handle = self.context.get_handle()
         for name, info in handle.ilistdirinfo(path, dirs_only=True):
+            tooltip = u'{}, {}'.format(
+                path + '/' + name,
+                info['modified_time'].isoformat())
             dirs.append(dict(title=name,
                 folder=True,
                 lazy=True,
+                tooltip=tooltip,
                 extraClasses="src-node",
                 key=path + '/' + name,
                 path=path + '/' + name))
 
         for name, info in handle.ilistdirinfo(path, files_only=True):
+            tooltip = u'{}, {}, {}'.format(
+                path + '/' + name,
+                info['st_size'],
+                info['modified_time'].isoformat())
             files.append(dict(title=name,
                 folder=False,
+                tooltip=tooltip,
                 extraClasses="src-node",
                 key=path + '/' + name,
                 path=path + '/' + name))
