@@ -4,4 +4,5 @@
   <object name="xmldirector.demo.bibledocument" meta_type="Dexterity FTI" />
   <object name="xmldirector.demo.modsdocument" meta_type="Dexterity FTI" />
   <object name="xmldirector.demo.musicxml" meta_type="Dexterity FTI" />
+  <object name="xmldirector.demo.publication" meta_type="Dexterity FTI" />
 </object>
