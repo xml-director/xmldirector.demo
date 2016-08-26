@@ -1,9 +1,9 @@
 
+import fs.path
 import json
 import pprint
 
 import plone.api
-from zope.annotation import IAnnotations
 from zope.interface import alsoProvides
 from plone.protect.interfaces import IDisableCSRFProtection
 from Products.Five.browser import BrowserView
@@ -14,31 +14,26 @@ KEY = 'xmldirector-content-tree'
 
 class Publication(BrowserView):
 
+
     @property
-    def annotation(self):
-        annotation = IAnnotations(self.context)
-        anno = annotation.get(KEY)
-        if anno is None:
-            annotation[KEY] = dict()
-            return {}
-        return anno
-
-    def save_tree(self, name='tree'):
-        alsoProvides(self.request, IDisableCSRFProtection)
-
-        if not name:
-            name = datetime.utcnow().isoformat()
-        data = json.loads(self.request.BODY)
-        anno = self.annotation
-        anno[name] = data
-        self.context._p_changed = 1
-        self.request.response.setStatus(200)
-
-    def connector(self):
+    def src_connector(self):
+        """ Returns the (first) source connector """
         catalog = plone.api.portal.get_tool('portal_catalog')
-        if not self.context.connectors:
+        if not self.context.src_connectors:
             return None
-        uid = self.context.connectors[0]
+        uid = self.context.src_connectors[0]
+        brains = catalog(UID=uid)
+        if not brains:
+            return None
+        return brains[0].getObject()
+
+    @property
+    def target_connector(self):
+        """ Returns the target connector """
+        catalog = plone.api.portal.get_tool('portal_catalog')
+        if not self.context.target_connector:
+            return None
+        uid = self.context.target_connector
         brains = catalog(UID=uid)
         if not brains:
             return None
@@ -46,9 +41,9 @@ class Publication(BrowserView):
 
     def connector_url(self):
         catalog = plone.api.portal.get_tool('portal_catalog')
-        if not self.context.connectors:
+        if not self.context.src_connectors:
             raise ValueError('No connector configured')
-        uid = self.context.connectors[0]
+        uid = self.context.src_connectors[0]
         brains = catalog(UID=uid)
         if not brains:
             raise ValueError('No connector found')
@@ -56,18 +51,33 @@ class Publication(BrowserView):
         return connector.absolute_url()
 
     def load_tree(self, name='tree'):
-        anno = self.annotation
-        if not name in anno:
-            self.request.response.setStatus(404)
-            return 'Key "{}" not found in tree'.format(name)
-        return json.dumps(anno[name])
+        """ Load (json) tree from target connector """
+        handle = self.target_connector.get_handle()
+        handle.setContext(self.target_connector)
+        fname = fs.path.join('.', name + '.json')
+        with handle.open(fname, 'rb') as fp:
+            data = fp.read()
+        self.request.response.setHeader('content-type', 'application/json')
+        return data
+
+    def save_tree(self, name='tree'):
+        """ Save (json) tree to target connector """
+        alsoProvides(self.request, IDisableCSRFProtection)
+        if not name:
+            name = datetime.utcnow().isoformat()
+        handle = self.target_connector.get_handle()
+        handle.setContext(self.target_connector)
+        fname = fs.path.join('.', name + '.json')
+        with handle.open(fname, 'wb') as fp:
+            fp.write(self.request.BODY)
+        self.request.response.setStatus(200)
 
     def get_tree_data(self, path, mode):
 
         catalog = plone.api.portal.get_tool('portal_catalog')
-        if not self.context.connectors:
+        if not self.context.src_connectors:
             raise ValueError('No connector configured')
-        uid = self.context.connectors[0]
+        uid = self.context.src_connectors[0]
         brains = catalog(UID=uid)
         if not brains:
             raise ValueError('No connector found')
@@ -112,12 +122,3 @@ class Publication(BrowserView):
         files = sorted(files, key=lambda d: d['title'])
         return json.dumps(dirs + files)
 
-    def available_versions(self):
-        result = []
-        for name in self.annotation:
-            content= self.annotation[name]
-            content = pprint.pformat(content, indent=2)
-            result.append(dict(
-                title=name, 
-                content=content))
-        return result

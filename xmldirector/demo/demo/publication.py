@@ -24,33 +24,33 @@ from zope.schema.vocabulary import SimpleVocabulary
 from xmldirector.plonecore.i18n import MessageFactory as _
 
 
-
 def possibleConnectors(context):
-    
+    """ Return UID -> connector mapping vocabulary """    
     catalog = plone.api.portal.get_tool('portal_catalog')
     terms = []
     for brain in catalog(portal_type='xmldirector.plonecore.connector'):
-        terms.append(SimpleVocabulary.createTerm(brain.UID, brain.UID, brain.Title))
+        title = u'{} ({})'.format(brain.Title, brain.getPath())
+        terms.append(SimpleVocabulary.createTerm(brain.UID, brain.UID, title))
     return SimpleVocabulary(terms)
 directlyProvides(possibleConnectors, IContextSourceBinder)
 
 
 class IPublication(model.Schema):
 
-#    connectors = RelationList(
-#        title=u"Connectors",
-#        default=[],
-#        value_type=RelationChoice(title=_(u"Connectors"),
-#                                  source=ObjPathSourceBinder()),
-#        required=True,
-#    )
-
-    connectors = List(
-        title=u"Connectors",
+    src_connectors = List(
+        title=u"Source connector",
         default=[],
-        value_type=Choice(title=u'Connector', source=possibleConnectors),
+        value_type=Choice(title=u'Source connector', source=possibleConnectors),
         required=True,
     )
+
+    target_connector = Choice(
+        title=u"Target connector",
+        default=None,
+        source=possibleConnectors,
+        required=True,
+    )
+
 
 class Publication(Item):
 
@@ -58,5 +58,5 @@ class Publication(Item):
 
     def available_connectors(self):
         catalog = plone.api.portal.get_tool('portal_catalog')
-        for uid in self.connectors:
+        for uid in self.src_connectors:
             yield catalog(UID=uid)[0].getObject()

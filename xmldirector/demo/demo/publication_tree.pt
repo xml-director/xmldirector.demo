@@ -39,13 +39,13 @@
     <metal:content-core define-macro="content-core">
 
         <div class="error"
-            tal:condition="python: view.connector() is None" 
+            tal:condition="python: view.src_connector is None" 
             i18n:translate="">
             No connector is configured
         </div>
 
         <div id="message"></div>
-        <div tal:condition="python: view.connector() is not None">
+        <div tal:condition="python: view.src_connector is not None">
             <div style="float: left; width: 40%">
                 <h2>Content repository</h2>
                 <div id="tree1" style="max-height: 500px; overflow: auto">

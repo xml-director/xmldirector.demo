@@ -226,8 +226,11 @@ $(document).ready(function() {
             data: JSON.stringify(d),
             contentType: 'application/json',
             processData: false,
-            complete: function() {
-                message('data saved');
+            error: function(resp) {
+                message('Data could not be saved (' + resp.statusText + ')');
+            },
+            success: function(x) {
+                message('Data saved');
             }
         });
     });
