@@ -74,14 +74,11 @@ settings.bookalope_api_key = u'051d17836932453f8bc962a442a35543'
 
 import_dir = os.path.join(pkg_resources.get_distribution('xmldirector.demo').location, 'democontent', 'images')
 
-image = plone.api.content.create(type='Image', container=site, id='logo')
+image = plone.api.content.create(type='Image', container=site, id='logo', title='Logo')
 img_data = open(os.path.join(import_dir, 'xmldirector.png'), 'rb').read()
 image.image = namedfile.NamedBlobImage(img_data, filename=u'logo.png', contentType='image/png')
-
-try:
-    image.setExcludeFromNav(True)
-except:
-    pass
+image.reindexObject()
+image.exclude_from_nav = True
 image.reindexObject()
 
 
