@@ -62,10 +62,10 @@ settings.connector_url = connector_url
 settings.connector_username = u'admin'
 settings.connector_password = u'onkopedia' if mode == 'local' else u'admin'
 
-#settings = registry.forInterface(IPPClientPloneSettings)
-#settings.server_url = u'https://pp-server.zopyx.com'
-#settings.server_username = u'demo'
-#settings.server_password = u'demo' 
+settings = registry.forInterface(IPPClientPloneSettings)
+settings.server_url = u'https://pp-server.zopyx.com'
+settings.server_username = u'demo'
+settings.server_password = u'demo' 
 #
 registry = getUtility(IRegistry)
 settings = registry.forInterface(IBookalopeSettings)
