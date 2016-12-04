@@ -23,7 +23,7 @@ from plone.namedfile import NamedImage
 extension_ids = [
     'plonetheme.barceloneta:default', 
     'xmldirector.demo:default', 
-#    'pp.client.plone:default', 
+    'pp.client.plone:default', 
     'xmldirector.crex:default', 
     'xmldirector.bookalope:default', 
 ]
