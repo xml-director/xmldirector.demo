@@ -11,7 +11,7 @@ from Products.CMFPlone.factory import addPloneSite
 from AccessControl.SecurityManagement import newSecurityManager
 from xmldirector.plonecore.interfaces import IConnectorSettings
 from plone.app.textfield.value import RichTextValue
-#from pp.client.plone.interfaces import IPPClientPloneSettings
+from pp.client.plone.interfaces import IPPClientPloneSettings
 from xmldirector.bookalope.interfaces import IBookalopeSettings
 from plone import namedfile
 from plone.registry.interfaces import IRegistry
