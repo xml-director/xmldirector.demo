@@ -11,13 +11,22 @@ from Products.CMFPlone.factory import addPloneSite
 from AccessControl.SecurityManagement import newSecurityManager
 from xmldirector.plonecore.interfaces import IConnectorSettings
 from plone.app.textfield.value import RichTextValue
-from pp.client.plone.interfaces import IPPClientPloneSettings
+#from pp.client.plone.interfaces import IPPClientPloneSettings
 from xmldirector.bookalope.interfaces import IBookalopeSettings
 from plone import namedfile
 from plone.registry.interfaces import IRegistry
 from zope.component import getUtility
 
+from plone.namedfile import NamedImage
 
+
+extension_ids = [
+    'plonetheme.barceloneta:default', 
+    'xmldirector.demo:default', 
+#    'pp.client.plone:default', 
+    'xmldirector.crex:default', 
+    'xmldirector.bookalope:default', 
+]
 
 mode = sys.argv[-1]
 if mode == 'docker':
@@ -37,11 +46,7 @@ newSecurityManager(None, user.__of__(uf))
 if 'xml-director' in app.objectIds():
     app.manage_delObjects('xml-director')
 
-try:
-    import plonetheme.sunburst
-    addPloneSite(app, 'xml-director', create_userfolder=True, extension_ids=['plonetheme.sunburst:default', 'xmldirector.demo:default', 'pp.client.plone:default', 'vs.bootstrap.plonetheme:default', 'xmldirector.crex:default', 'xmldirector.bookalope:default', 'xmldirector.plonecore:default'])
-except ImportError:
-    addPloneSite(app, 'xml-director', extension_ids=['plonetheme.barceloneta:default', 'xmldirector.plonecore:default', 'xmldirector.demo:default', 'pp.client.plone:default'])
+addPloneSite(app, 'xml-director', extension_ids=extension_ids)
 
 site = app['xml-director']
 #site.portal_quickinstaller.uninstallProducts(['xmldirector.plonecore'])
@@ -57,27 +62,21 @@ settings.connector_url = connector_url
 settings.connector_username = u'admin'
 settings.connector_password = u'onkopedia' if mode == 'local' else u'admin'
 
-settings = registry.forInterface(IPPClientPloneSettings)
-settings.server_url = u'https://pp-server.zopyx.com'
-settings.server_username = u'demo'
-settings.server_password = u'demo' 
-
+#settings = registry.forInterface(IPPClientPloneSettings)
+#settings.server_url = u'https://pp-server.zopyx.com'
+#settings.server_username = u'demo'
+#settings.server_password = u'demo' 
+#
 registry = getUtility(IRegistry)
 settings = registry.forInterface(IBookalopeSettings)
 settings.bookalope_beta = True
 settings.bookalope_api_key = u'051d17836932453f8bc962a442a35543'
 
-
 import_dir = os.path.join(pkg_resources.get_distribution('xmldirector.demo').location, 'democontent', 'images')
 
 image = plone.api.content.create(type='Image', container=site, id='logo')
-
 img_data = open(os.path.join(import_dir, 'xmldirector.png'), 'rb').read()
-
-try:
-    image.setImage(img_data)
-except AttributeError:
-    image.image = namedfile.NamedBlobImage(img_data, filename=u'logo.png', contentType='image/png')
+image.image = namedfile.NamedBlobImage(img_data, filename=u'logo.png', contentType='image/png')
 
 try:
     image.setExcludeFromNav(True)
@@ -155,22 +154,22 @@ for name in os.listdir(import_dir):
     dok.xml_set('xml_content', unicode(content, 'utf-8'))
     dok.reindexObject()
 
-#folder = plone.api.content.create(type='Folder', container=site, id='musicxml', title='MusicXML')
-#import_dir = os.path.join(pkg_resources.get_distribution('xmldirector.demo').location, 'democontent', 'musicxml')
-#for name in os.listdir(import_dir):
-#    if not name.endswith('.xml'):
-#        continue
-#    dok = plone.api.content.create(
-#        type='xmldirector.demo.musicxml',
-#        container=folder,
-#        id=name,
-#        title=name)
-#    content = open(os.path.join(import_dir, name)).read()
-#    try:
-#        dok.xml_set('xml_content', unicode(content, 'utf-8'))
-#    except UnicodeDecodeError:
-#        dok.xml_set('xml_content', unicode(content, 'utf-16'))
-#    dok.reindexObject()
+folder = plone.api.content.create(type='Folder', container=site, id='musicxml', title='MusicXML')
+import_dir = os.path.join(pkg_resources.get_distribution('xmldirector.demo').location, 'democontent', 'musicxml')
+for name in os.listdir(import_dir):
+    if not name.endswith('.xml'):
+        continue
+    dok = plone.api.content.create(
+        type='xmldirector.demo.musicxml',
+        container=folder,
+        id=name,
+        title=name)
+    content = open(os.path.join(import_dir, name)).read()
+    try:
+        dok.xml_set('xml_content', unicode(content, 'utf-8'))
+    except UnicodeDecodeError:
+        dok.xml_set('xml_content', unicode(content, 'utf-16'))
+    dok.reindexObject()
 
 folder = plone.api.content.create(type='Folder', container=site, id='shakespeare', title='Shakespeare XML')
 import_dir = os.path.join(pkg_resources.get_distribution('xmldirector.demo').location, 'democontent', 'shakespeare')
