@@ -39,21 +39,18 @@
         </style>
 
         <tal:if condition="python: context.portal_type == 'Folder'">
-            <a tal:attributes="href string:${context/absolute_url}/new-connector">
+            <form method="post"  tal:attributes="action string:${context/absolute_url}/new-connector">
                 <button>Start new DOCX -> XML conversion</button>
-            </a>
+            </form>
         </tal:if>
 
         <tal:if condition="python: context.portal_type != 'Folder'">
-
             <div id="form-info">This form allows you to upload a DOCX file into XML Director</div>
-
             <form method="post" tal:attributes="action string:${context/absolute_url}/upload_docx" enctype="multipart/form-data">
                 <input type="file" name="docx" />
                 <br/><br/>
                 <input class="context" type="submit" value="Upload DOCX"/>
             </form>
-
         </tal:if>
 
         <tal:if condition="view/have_docx">

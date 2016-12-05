@@ -9,6 +9,8 @@ import tempfile
 from zipfile import ZipFile
 
 import plone.api
+from plone.protect.interfaces import IDisableCSRFProtection
+from zope.interface import alsoProvides
 from Products.Five.browser import BrowserView
 
 from xmldirector.plonecore.browser.restapi import store_zip
@@ -16,6 +18,10 @@ from xmldirector.crex.browser.restapi import convert_crex
 
 
 class CREX(BrowserView):
+
+    def __init__(self, context, request):
+        super(CREX, self).__init__(context, request)
+        alsoProvides(self.request, IDisableCSRFProtection)
 
     @property
     def handle(self):

@@ -3,3 +3,8 @@
     width: 400px;
     height: 72px;
 }
+
+
+#content-core a {
+    border-bottom: none !important;
+}

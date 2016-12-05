@@ -69,7 +69,7 @@ settings.server_password = u'demo'
 #
 registry = getUtility(IRegistry)
 settings = registry.forInterface(IBookalopeSettings)
-settings.bookalope_beta = True
+settings.bookalope_beta = False
 settings.bookalope_api_key = u'051d17836932453f8bc962a442a35543'
 
 import_dir = os.path.join(pkg_resources.get_distribution('xmldirector.demo').location, 'democontent', 'images')
